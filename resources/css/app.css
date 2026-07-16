@@ -278,3 +278,64 @@ button, input, textarea { font: inherit; }
 .contact-social-icon.x-social:hover { background: #000; }
 .contact-social-icon.youtube:hover { background: #ff0000; }
 .contact-social-icon.tiktok:hover { background: #111; }
+
+.ministry-home-photo,
+.ministry-page-photo,
+.ministry-detail-photo {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+}
+
+.ministry-home-photo {
+    height: 250px;
+}
+
+.ministry-page-photo {
+    height: 300px;
+}
+
+.ministry-detail-photo {
+    min-height: 520px;
+    border-radius: 22px;
+}
+
+.leader-feature {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 45px;
+    align-items: center;
+}
+
+.leader-photo {
+    width: 280px;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.rich-copy {
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+.light-empty {
+    color: white;
+    border-color: rgba(255,255,255,.35);
+    background: rgba(255,255,255,.08);
+}
+
+@media (max-width: 760px) {
+    .leader-feature {
+        grid-template-columns: 1fr;
+    }
+
+    .leader-photo {
+        width: 100%;
+        height: auto;
+    }
+
+    .ministry-detail-photo {
+        min-height: 0;
+    }
+}
