@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\GalleryAlbumController;
 use App\Http\Controllers\Admin\MinistryController;
 use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PrayerRequestController as AdminPrayerRequestController;
 use App\Http\Controllers\Admin\SermonController;
 use App\Http\Controllers\ProfileController;
@@ -168,6 +169,12 @@ Route::view('/admin', 'dashboard')
 Route::redirect('/dashboard', '/admin');
 
 Route::middleware('auth')->group(function () {
+    Route::resource('/admin/users', UserController::class)
+        ->except('show')
+        ->middleware('role:super_admin,senior_pastor,admin')
+        ->names('admin.users');
+
+
     Route::resource('/admin/members', MemberController::class)
         ->names('admin.members');
 
