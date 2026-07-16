@@ -21,6 +21,10 @@
     ♡ Prayer Requests
 </a>
 <a href="#" class="flex gap-3 rounded-lg px-4 py-3 hover:bg-white/10">⚙ Website Settings</a>
+<a href="{{ route('admin.members.index') }}"
+   class="flex gap-3 rounded-lg px-4 py-3 hover:bg-white/10 {{ request()->routeIs('admin.members.*') ? 'bg-white/15' : '' }}">
+    ♟ Members
+</a>
 </nav>
 <div class="absolute bottom-0 left-0 right-0 border-t border-white/10 p-4"><a href="{{ route('home') }}" class="block rounded-lg border border-white/20 px-4 py-3 text-center text-sm">View Public Website</a></div>
 </aside>

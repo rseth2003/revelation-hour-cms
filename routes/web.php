@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DailyWordController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\GalleryAlbumController;
 use App\Http\Controllers\Admin\MinistryController;
+use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\PrayerRequestController as AdminPrayerRequestController;
 use App\Http\Controllers\Admin\SermonController;
 use App\Http\Controllers\ProfileController;
@@ -167,6 +168,10 @@ Route::view('/admin', 'dashboard')
 Route::redirect('/dashboard', '/admin');
 
 Route::middleware('auth')->group(function () {
+    Route::resource('/admin/members', MemberController::class)
+        ->names('admin.members');
+
+
     Route::get('/admin/prayer-requests', [AdminPrayerRequestController::class, 'index'])
         ->name('admin.prayer-requests.index');
 

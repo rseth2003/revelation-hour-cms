@@ -42,7 +42,8 @@
                 </a>
             </article>
         @endforeach
-    </section>
+    @include('partials.member-dashboard-card')
+</section>
 
     <div class="mb-5 mt-10">
         <h2 class="text-xl font-bold text-[#072f68]">Coming Soon</h2>
@@ -53,7 +54,7 @@
         @foreach([
             ['Website Settings','Contacts, social links, service times and branding.','⚙','bg-amber-100 text-amber-700'],
             ['Hero Slider Manager','Manage custom homepage slides and campaigns.','▤','bg-sky-100 text-sky-700'],
-            ['Members','Visitor and member records with consent controls.','♟','bg-slate-200 text-slate-700'],
+            
             ['Users and Roles','Senior Usher, Pastor, Media Team and Admin permissions.','♜','bg-orange-100 text-orange-700'],
             ['Communication Center','SMS, email and scheduled event reminders.','✉','bg-emerald-100 text-emerald-700'],
             ['Analytics','Website activity and CMS content statistics.','▥','bg-teal-100 text-teal-700'],
