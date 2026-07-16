@@ -75,7 +75,7 @@
                         <a href="{{ route('admin.sermons.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.sermons.*') ? 'is-active' : '' }}">Sermons</a>
                         <a href="{{ route('admin.gallery.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.gallery.*') ? 'is-active' : '' }}">Gallery</a>
                         <a href="{{ route('admin.prayer-requests.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.prayer-requests.*') ? 'is-active' : '' }}">Prayer Requests</a>
-                        <a href="#" class="admin-nav-sublink opacity-70">Website Settings</a>
+                        <a href="{{ route('admin.settings.edit') }}" class="admin-nav-sublink {{ request()->routeIs('admin.settings.*') ? 'is-active' : '' }}">Website Settings</a>
                     </div>
                 </div>
             </div>
@@ -179,7 +179,7 @@
 
                 <div class="admin-nav-submenu" data-sidebar-submenu>
                     <div class="admin-nav-submenu-inner">
-                        <a href="#" class="admin-nav-sublink opacity-70">Website Settings</a>
+                        <a href="{{ route('admin.settings.edit') }}" class="admin-nav-sublink {{ request()->routeIs('admin.settings.*') ? 'is-active' : '' }}">Website Settings</a>
                         <a href="#" class="admin-nav-sublink opacity-70">General Settings</a>
                     </div>
                 </div>

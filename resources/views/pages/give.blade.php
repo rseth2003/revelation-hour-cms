@@ -1,5 +1,29 @@
-@extends('layouts.app') @section('title','Give | RHMI') @section('content')
-<section class="page-hero"><div class="container"><p class="eyebrow">Generosity</p><h1>Partner with the mission</h1><p>Support worship, discipleship, outreach and the Gospel.</p></div></section>
-<section class="section"><div class="container giving-page-grid"><article class="giving-option"><span>01</span><h2>Mobile Money</h2><p>Official ministry numbers will be added after confirmation.</p></article><article class="giving-option"><span>02</span><h2>Bank Giving</h2><p>Official bank details will be added after confirmation.</p></article><article class="giving-option"><span>03</span><h2>In-Person Giving</h2><p>Give during official church services and gatherings.</p></article></div></section>
-<section class="section section-soft"><div class="container two-column"><div><p class="eyebrow">Why We Give</p><h2 class="section-title-left">Generosity is worship</h2><p>We give willingly and faithfully as an act of worship and stewardship.</p></div><div class="accountability-card"><h3>Financial responsibility</h3><p>Only verified church giving details should be published.</p></div></div></section>
+@extends('layouts.app')
+
+@section('title', 'Give | '.(($websiteSettings->church_name ?? null) ?: 'RHMI'))
+
+@section('content')
+<section class="page-hero">
+    <div class="container">
+        <p class="eyebrow">Give</p>
+        <h1>Support the work of ministry</h1>
+        <p>Your giving helps the church serve people, share the gospel and support ministry work.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="content-card">
+            <h2>Giving Information</h2>
+
+            @if($websiteSettings->giving_details)
+                <div class="whitespace-pre-line leading-8 text-slate-700">
+                    {{ $websiteSettings->giving_details }}
+                </div>
+            @else
+                <p>Giving details will be published here by the church administration.</p>
+            @endif
+        </div>
+    </div>
+</section>
 @endsection

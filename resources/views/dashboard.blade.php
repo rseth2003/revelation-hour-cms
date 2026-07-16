@@ -49,6 +49,7 @@
 @if(auth()->user()->hasRole('super_admin','senior_pastor','campus_pastor','admin','senior_usher','membership_officer'))
 @include('partials.attendance-dashboard-card')
 @endif
+@include('partials.settings-dashboard-card')
 </section>
 
     <div class="mb-5 mt-10">
@@ -58,7 +59,7 @@
 
     <section class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
         @foreach([
-            ['Website Settings','Contacts, social links, service times and branding.','⚙','bg-amber-100 text-amber-700'],
+            
             ['Hero Slider Manager','Manage custom homepage slides and campaigns.','▤','bg-sky-100 text-sky-700'],
             
             

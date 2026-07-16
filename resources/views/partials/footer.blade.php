@@ -8,7 +8,7 @@
 
         <div>
             <h4>Visit Us</h4>
-            <p>Valley Road, Canaansite Estate,<br>Nakwero-Gayaza, Uganda</p>
+            <p>Valley Road, Canaansite Estate,<br>Nakwero–Gayaza, Uganda</p>
             <p><a href="tel:+256774328127">+256 774 328 127</a></p>
             <p><a href="tel:+256784537003">+256 784 537 003</a></p>
         </div>

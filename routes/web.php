@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\GalleryAlbumController;
 use App\Http\Controllers\Admin\MinistryController;
 use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\WebsiteSettingController;
 use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PrayerRequestController as AdminPrayerRequestController;
@@ -170,6 +171,15 @@ Route::view('/admin', 'dashboard')
 Route::redirect('/dashboard', '/admin');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/admin/settings', [WebsiteSettingController::class, 'edit'])
+        ->middleware('role:super_admin,senior_pastor,admin,media_team')
+        ->name('admin.settings.edit');
+
+    Route::put('/admin/settings', [WebsiteSettingController::class, 'update'])
+        ->middleware('role:super_admin,senior_pastor,admin,media_team')
+        ->name('admin.settings.update');
+
+
     Route::get('/admin/attendance', [AttendanceController::class, 'index'])
         ->middleware('role:super_admin,senior_pastor,campus_pastor,admin,senior_usher,membership_officer')
         ->name('admin.attendance.index');
