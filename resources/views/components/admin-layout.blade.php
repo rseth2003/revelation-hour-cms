@@ -16,7 +16,10 @@
 <a href="{{ route('admin.ministries.index') }}" class="flex gap-3 rounded-lg px-4 py-3 hover:bg-white/10 {{ request()->routeIs('admin.ministries.*')?'bg-white/15':'' }}">◆ Ministries</a>
 <a href="{{ route('admin.sermons.index') }}" class="flex gap-3 rounded-lg px-4 py-3 hover:bg-white/10 {{ request()->routeIs('admin.sermons.*')?'bg-white/15':'' }}">▶ Sermons</a>
 <a href="{{ route('admin.gallery.index') }}" class="flex gap-3 rounded-lg px-4 py-3 hover:bg-white/10 {{ request()->routeIs('admin.gallery.*')?'bg-white/15':'' }}">▧ Gallery</a>
-<a href="#" class="flex gap-3 rounded-lg px-4 py-3 hover:bg-white/10">♡ Prayer Requests</a>
+<a href="{{ route('admin.prayer-requests.index') }}"
+   class="flex gap-3 rounded-lg px-4 py-3 hover:bg-white/10 {{ request()->routeIs('admin.prayer-requests.*') ? 'bg-white/15' : '' }}">
+    ♡ Prayer Requests
+</a>
 <a href="#" class="flex gap-3 rounded-lg px-4 py-3 hover:bg-white/10">⚙ Website Settings</a>
 </nav>
 <div class="absolute bottom-0 left-0 right-0 border-t border-white/10 p-4"><a href="{{ route('home') }}" class="block rounded-lg border border-white/20 px-4 py-3 text-center text-sm">View Public Website</a></div>
@@ -26,4 +29,5 @@
 <main class="p-4 sm:p-6 lg:p-8">{{ $slot }}</main>
 </div></div>
 <script>document.addEventListener('DOMContentLoaded',()=>{const t=document.getElementById('sidebarToggle'),s=document.getElementById('adminSidebar');if(t&&s)t.addEventListener('click',()=>s.classList.toggle('-translate-x-full'));});</script>
+@include('partials.flash-toast')
 </body></html>

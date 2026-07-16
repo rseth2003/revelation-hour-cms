@@ -6,8 +6,10 @@ use App\Http\Controllers\Admin\DailyWordController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\GalleryAlbumController;
 use App\Http\Controllers\Admin\MinistryController;
+use App\Http\Controllers\Admin\PrayerRequestController as AdminPrayerRequestController;
 use App\Http\Controllers\Admin\SermonController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PrayerRequestController;
 use App\Models\Campus;
 use App\Models\DailyWord;
 use App\Models\Event;
@@ -154,6 +156,10 @@ Route::view('/plan-your-visit', 'pages.visit')->name('visit');
 Route::view('/give', 'pages.give')->name('give');
 Route::view('/contact', 'pages.contact')->name('contact');
 
+Route::post('/prayer-requests', [PrayerRequestController::class, 'store'])
+    ->middleware('throttle:10,1')
+    ->name('prayer-requests.store');
+
 Route::view('/admin', 'dashboard')
     ->middleware('auth')
     ->name('dashboard');
@@ -161,6 +167,19 @@ Route::view('/admin', 'dashboard')
 Route::redirect('/dashboard', '/admin');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/admin/prayer-requests', [AdminPrayerRequestController::class, 'index'])
+        ->name('admin.prayer-requests.index');
+
+    Route::get('/admin/prayer-requests/{prayerRequest}', [AdminPrayerRequestController::class, 'show'])
+        ->name('admin.prayer-requests.show');
+
+    Route::put('/admin/prayer-requests/{prayerRequest}', [AdminPrayerRequestController::class, 'update'])
+        ->name('admin.prayer-requests.update');
+
+    Route::delete('/admin/prayer-requests/{prayerRequest}', [AdminPrayerRequestController::class, 'destroy'])
+        ->name('admin.prayer-requests.destroy');
+
+
     Route::resource('/admin/gallery', GalleryAlbumController::class)
         ->except('show')
         ->names('admin.gallery');

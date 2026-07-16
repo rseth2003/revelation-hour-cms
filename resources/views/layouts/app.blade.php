@@ -12,5 +12,6 @@
     @include('partials.navbar')
     <main>@yield('content')</main>
     @include('partials.footer')
+@include('partials.flash-toast')
 </body>
 </html>

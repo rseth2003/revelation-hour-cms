@@ -251,3 +251,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.key === 'ArrowRight') show(current + 1);
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const toast = document.querySelector('[data-rhmi-toast]');
+    if (!toast) return;
+
+    const closeButton = toast.querySelector('[data-rhmi-toast-close]');
+    let timer = null;
+
+    const closeToast = () => {
+        window.clearTimeout(timer);
+        toast.classList.add('is-leaving');
+        window.setTimeout(() => toast.remove(), 300);
+    };
+
+    closeButton?.addEventListener('click', closeToast);
+    timer = window.setTimeout(closeToast, 7000);
+});
