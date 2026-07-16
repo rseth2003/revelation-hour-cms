@@ -1,9 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\BibleLookupController;
+use App\Http\Controllers\Admin\CampusController;
+use App\Http\Controllers\Admin\DailyWordController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\MinistryController;
 use App\Http\Controllers\Admin\SermonController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Campus;
+use App\Models\DailyWord;
 use App\Models\Event;
 use App\Models\Ministry;
 use App\Models\Sermon;
@@ -33,10 +38,41 @@ Route::get('/', function () {
             ->orderByDesc('sermon_date')
             ->first();
 
-    return view('home', compact('events', 'ministries', 'featuredSermon'));
+    $featuredDailyWord = \App\Models\DailyWord::query()
+        ->where('is_published', true)
+        ->whereDate('publish_date', '<=', now()->toDateString())
+        ->where('is_featured', true)
+        ->first()
+        ?? \App\Models\DailyWord::query()
+            ->where('is_published', true)
+            ->whereDate('publish_date', '<=', now()->toDateString())
+            ->orderByDesc('publish_date')
+            ->first();
+
+    return view('home', compact('events', 'ministries', 'featuredSermon', 'featuredDailyWord'));
 })->name('home');
 
 Route::view('/about', 'pages.about')->name('about');
+
+
+Route::get('/campuses', function () {
+    $campuses = Campus::query()
+        ->where('is_published', true)
+        ->orderByDesc('is_main_campus')
+        ->orderBy('sort_order')
+        ->orderBy('name')
+        ->get();
+
+    return view('pages.campuses', compact('campuses'));
+})->name('campuses');
+
+Route::get('/campuses/{campus:slug}', function (Campus $campus) {
+    abort_unless($campus->is_published, 404);
+
+    return view('pages.campus-show', compact('campus'));
+})->name('campuses.show');
+
+
 
 Route::get('/ministries', function () {
     $ministries = Ministry::query()
@@ -84,6 +120,13 @@ Route::get('/sermons', function () {
     return view('pages.sermons', compact('featured', 'sermons'));
 })->name('sermons');
 
+
+Route::get('/word-of-the-day', function () {
+    $featured = DailyWord::where('is_published', true)->whereDate('publish_date', '<=', now()->toDateString())->where('is_featured', true)->first() ?? DailyWord::where('is_published', true)->whereDate('publish_date', '<=', now()->toDateString())->orderByDesc('publish_date')->first();
+    $words = DailyWord::where('is_published', true)->whereDate('publish_date', '<=', now()->toDateString())->when($featured, fn ($q) => $q->whereKeyNot($featured->id))->orderByDesc('publish_date')->get();
+    return view('pages.daily-words', compact('featured','words'));
+})->name('daily-words');
+
 Route::view('/plan-your-visit', 'pages.visit')->name('visit');
 Route::view('/give', 'pages.give')->name('give');
 Route::view('/contact', 'pages.contact')->name('contact');
@@ -95,6 +138,16 @@ Route::view('/admin', 'dashboard')
 Route::redirect('/dashboard', '/admin');
 
 Route::middleware('auth')->group(function () {
+    Route::resource('/admin/campuses', CampusController::class)
+        ->except('show')
+        ->names('admin.campuses');
+
+
+    Route::get('/admin/bible-lookup', BibleLookupController::class)
+        ->name('admin.bible.lookup');
+
+
+    Route::resource('/admin/daily-words', DailyWordController::class)->except('show')->names('admin.daily-words');
     Route::resource('/admin/events', EventController::class)
         ->except('show')
         ->names('admin.events');

@@ -3,19 +3,7 @@
 @section('title', 'Revelation Hour Ministries International')
 
 @section('content')
-<section class="hero">
-    <div class="hero-overlay"></div>
-    <div class="container hero-content">
-        <p class="eyebrow">Word | Worth | Wonder</p>
-        <h1>Welcome to Revelation Hour Ministries International</h1>
-        <p class="hero-copy">Encounter God, grow through His Word, belong to a caring community and live with purpose.</p>
-
-        <div class="hero-actions">
-            <a class="btn btn-primary" href="{{ route('visit') }}">Plan Your Visit</a>
-            <a class="btn btn-outline" href="https://youtube.com/@revelationhourm?si=gyH5QweTg4264hK-" target="_blank" rel="noopener">Watch Online</a>
-        </div>
-    </div>
-</section>
+@include('partials.home-hero-slider')
 
 <section class="quick-actions">
     <div class="container quick-grid">
@@ -151,4 +139,7 @@
         </div>
     </div>
 </section>
+
+
+@include('partials.home-daily-word')
 @endsection

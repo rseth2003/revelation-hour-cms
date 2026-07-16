@@ -1,0 +1,1 @@
+<x-admin-layout title="Edit Word of the Day" heading="Edit Word of the Day"><div class="mx-auto max-w-5xl rounded-2xl border bg-white p-8"><form method="POST" action="{{ route('admin.daily-words.update',$dailyWord) }}" enctype="multipart/form-data">@method('PUT') @include('admin.daily-words._form',['buttonText'=>'Save Changes'])</form></div></x-admin-layout>

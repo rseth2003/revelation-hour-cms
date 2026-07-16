@@ -1,0 +1,26 @@
+@csrf
+
+<div class="grid gap-6 lg:grid-cols-2">
+<div class="space-y-5">
+<div><label class="mb-2 block text-sm font-semibold text-slate-700">Campus name</label><input name="name" value="{{ old('name',$campus->name ?? '') }}" class="w-full rounded-xl border-slate-300" required></div>
+<div><label class="mb-2 block text-sm font-semibold text-slate-700">Short introduction</label><textarea name="short_description" rows="3" class="w-full rounded-xl border-slate-300">{{ old('short_description',$campus->short_description ?? '') }}</textarea></div>
+<div><label class="mb-2 block text-sm font-semibold text-slate-700">Full campus description</label><textarea name="description" rows="7" class="w-full rounded-xl border-slate-300">{{ old('description',$campus->description ?? '') }}</textarea></div>
+<div><label class="mb-2 block text-sm font-semibold text-slate-700">Full address</label><input name="address" value="{{ old('address',$campus->address ?? '') }}" class="w-full rounded-xl border-slate-300" required></div>
+<div class="grid gap-4 sm:grid-cols-2"><div><label class="mb-2 block text-sm font-semibold text-slate-700">District or city</label><input name="district" value="{{ old('district',$campus->district ?? '') }}" class="w-full rounded-xl border-slate-300"></div><div><label class="mb-2 block text-sm font-semibold text-slate-700">Country</label><input name="country" value="{{ old('country',$campus->country ?? 'Uganda') }}" class="w-full rounded-xl border-slate-300" required></div></div>
+<div><label class="mb-2 block text-sm font-semibold text-slate-700">Campus service times</label><textarea name="service_times" rows="7" class="w-full rounded-xl border-slate-300" placeholder="Add one service per line">{{ old('service_times',$campus->service_times ?? '') }}</textarea></div>
+</div>
+
+<div class="space-y-5">
+<div class="grid gap-4 sm:grid-cols-2"><div><label class="mb-2 block text-sm font-semibold text-slate-700">Resident pastor</label><input name="resident_pastor" value="{{ old('resident_pastor',$campus->resident_pastor ?? '') }}" class="w-full rounded-xl border-slate-300"></div><div><label class="mb-2 block text-sm font-semibold text-slate-700">Campus email</label><input type="email" name="email" value="{{ old('email',$campus->email ?? '') }}" class="w-full rounded-xl border-slate-300"></div></div>
+<div><label class="mb-2 block text-sm font-semibold text-slate-700">Resident pastor biography</label><textarea name="pastor_bio" rows="5" class="w-full rounded-xl border-slate-300">{{ old('pastor_bio',$campus->pastor_bio ?? '') }}</textarea></div>
+<div class="grid gap-4 sm:grid-cols-2"><div><label class="mb-2 block text-sm font-semibold text-slate-700">Primary phone</label><input name="phone_primary" value="{{ old('phone_primary',$campus->phone_primary ?? '') }}" class="w-full rounded-xl border-slate-300"></div><div><label class="mb-2 block text-sm font-semibold text-slate-700">Secondary phone</label><input name="phone_secondary" value="{{ old('phone_secondary',$campus->phone_secondary ?? '') }}" class="w-full rounded-xl border-slate-300"></div></div>
+<div><label class="mb-2 block text-sm font-semibold text-slate-700">Google Maps or directions link</label><input type="url" name="map_url" value="{{ old('map_url',$campus->map_url ?? '') }}" class="w-full rounded-xl border-slate-300"></div>
+<div><label class="mb-2 block text-sm font-semibold text-slate-700">Campus cover photo</label><input type="file" name="cover_image" accept=".jpg,.jpeg,.png,.webp" class="block w-full rounded-xl border border-slate-300 bg-white p-3 text-sm">@if(isset($campus)&&$campus->cover_image_url)<img src="{{ $campus->cover_image_url }}" class="mt-4 h-52 w-full rounded-xl object-cover">@endif</div>
+<div><label class="mb-2 block text-sm font-semibold text-slate-700">Resident pastor photo</label><input type="file" name="pastor_image" accept=".jpg,.jpeg,.png,.webp" class="block w-full rounded-xl border border-slate-300 bg-white p-3 text-sm">@if(isset($campus)&&$campus->pastor_image_url)<img src="{{ $campus->pastor_image_url }}" class="mt-4 h-44 w-44 rounded-xl object-cover">@endif</div>
+<div><label class="mb-2 block text-sm font-semibold text-slate-700">Display order</label><input type="number" min="0" name="sort_order" value="{{ old('sort_order',$campus->sort_order ?? 0) }}" class="w-full rounded-xl border-slate-300"></div>
+<label class="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4"><input name="is_main_campus" type="checkbox" value="1" @checked(old('is_main_campus',$campus->is_main_campus ?? false))><span><strong class="block text-sm">Main campus</strong><span class="text-xs text-slate-500">Only one campus can be the main campus.</span></span></label>
+<label class="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4"><input name="is_published" type="checkbox" value="1" @checked(old('is_published',$campus->is_published ?? false))><span><strong class="block text-sm">Publish campus</strong><span class="text-xs text-slate-500">Show this campus publicly.</span></span></label>
+</div>
+</div>
+
+<div class="mt-8 flex gap-3"><button class="rounded-xl bg-[#072f68] px-6 py-3 font-semibold text-white">{{ $buttonText }}</button><a href="{{ route('admin.campuses.index') }}" class="rounded-xl border border-slate-300 px-6 py-3 font-semibold text-slate-700">Cancel</a></div>

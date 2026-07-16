@@ -1,0 +1,6 @@
+@extends('layouts.app')
+@section('title','Our Campuses | Revelation Hour Ministries International')
+@section('content')
+<section class="page-hero"><div class="container"><p class="eyebrow">One Church in Many Locations</p><h1>Find a Revelation Hour campus</h1><p>Discover a campus near you, meet its resident pastor and view service information.</p></div></section>
+<section class="section"><div class="container">@if($campuses->isEmpty())<div class="empty-state">No campuses have been published yet.</div>@else<div class="campus-grid">@foreach($campuses as $campus)<a class="campus-card" href="{{ route('campuses.show',$campus) }}">@if($campus->cover_image_url)<img src="{{ $campus->cover_image_url }}" alt="{{ $campus->name }}">@else<div class="campus-placeholder">{{ $campus->name }}</div>@endif<div class="campus-card-copy"><div class="campus-card-heading"><h2>{{ $campus->name }}</h2>@if($campus->is_main_campus)<span>Main Campus</span>@endif</div><p>{{ $campus->short_description }}</p><p class="campus-address">{{ $campus->address }}</p>@if($campus->resident_pastor)<p><strong>Resident Pastor:</strong> {{ $campus->resident_pastor }}</p>@endif<strong class="campus-link">View campus details</strong></div></a>@endforeach</div>@endif</div></section>
+@endsection

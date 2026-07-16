@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'api_bible' => [
+        'key' => env('API_BIBLE_KEY'),
+    ],
+
 ];

@@ -1,0 +1,1 @@
+<x-admin-layout title="Add Word of the Day" heading="Add Word of the Day"><div class="mx-auto max-w-5xl rounded-2xl border bg-white p-8"><form method="POST" action="{{ route('admin.daily-words.store') }}" enctype="multipart/form-data">@include('admin.daily-words._form',['buttonText'=>'Create Message'])</form></div></x-admin-layout>

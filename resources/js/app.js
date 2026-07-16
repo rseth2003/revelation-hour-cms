@@ -112,3 +112,96 @@ document.addEventListener('DOMContentLoaded', () => {
     showSlide(0);
     restart();
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const hero = document.querySelector('[data-home-hero]');
+
+    if (!hero) {
+        return;
+    }
+
+    const slides = Array.from(hero.querySelectorAll('.home-hero-slide'));
+    const previous = hero.querySelector('[data-home-hero-previous]');
+    const next = hero.querySelector('[data-home-hero-next]');
+    const dotsContainer = hero.querySelector('[data-home-hero-dots]');
+    const progress = hero.querySelector('[data-home-hero-progress]');
+
+    if (slides.length < 2) {
+        previous?.remove();
+        next?.remove();
+        dotsContainer?.remove();
+        return;
+    }
+
+    const interval = 7000;
+    let current = 0;
+    let timer = null;
+    let touchStartX = 0;
+
+    const dots = slides.map((_, index) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'home-hero-dot';
+        dot.setAttribute('aria-label', `Open slide ${index + 1}`);
+        dot.addEventListener('click', () => show(index, true));
+        dotsContainer.appendChild(dot);
+        return dot;
+    });
+
+    function restartProgress() {
+        if (!progress) return;
+        progress.classList.remove('is-running');
+        void progress.offsetWidth;
+        progress.classList.add('is-running');
+    }
+
+    function show(index, restartTimer = false) {
+        slides[current].classList.remove('is-active');
+        dots[current].classList.remove('is-active');
+
+        current = (index + slides.length) % slides.length;
+
+        slides[current].classList.add('is-active');
+        dots[current].classList.add('is-active');
+
+        restartProgress();
+
+        if (restartTimer) {
+            start();
+        }
+    }
+
+    function start() {
+        window.clearInterval(timer);
+        timer = window.setInterval(() => show(current + 1), interval);
+        restartProgress();
+    }
+
+    function stop() {
+        window.clearInterval(timer);
+        progress?.classList.remove('is-running');
+    }
+
+    previous?.addEventListener('click', () => show(current - 1, true));
+    next?.addEventListener('click', () => show(current + 1, true));
+
+    hero.addEventListener('mouseenter', stop);
+    hero.addEventListener('mouseleave', start);
+    hero.addEventListener('focusin', stop);
+    hero.addEventListener('focusout', start);
+
+    hero.addEventListener('touchstart', event => {
+        touchStartX = event.changedTouches[0].screenX;
+    }, { passive: true });
+
+    hero.addEventListener('touchend', event => {
+        const difference = event.changedTouches[0].screenX - touchStartX;
+
+        if (Math.abs(difference) > 45) {
+            show(difference > 0 ? current - 1 : current + 1, true);
+        }
+    }, { passive: true });
+
+    dots[0].classList.add('is-active');
+    start();
+});
