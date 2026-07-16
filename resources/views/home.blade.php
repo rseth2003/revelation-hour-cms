@@ -1,154 +1,54 @@
 @extends('layouts.app')
-
 @section('title', 'Revelation Hour Ministries International')
-
 @section('content')
-<section class="hero" id="home">
-    <div class="hero-overlay"></div>
-    <div class="container hero-content">
-        <p class="eyebrow">Word · Worth · Wonder</p>
-        <h1>Welcome to Revelation Hour Ministries International</h1>
-        <p>A place of worship, transformation, fellowship and the life-changing Word of God.</p>
-        <div class="hero-actions">
-            <a class="btn btn-primary" href="#services">View Service Times</a>
-            <a class="btn btn-outline" href="#live-events">See Live Events</a>
-        </div>
-    </div>
-</section>
+<section class="hero"><div class="hero-overlay"></div><div class="container hero-content">
+<p class="eyebrow">Word | Worth | Wonder</p>
+<h1>Welcome to Revelation Hour Ministries International</h1>
+<p class="hero-copy">Encounter God, grow through His Word, belong to a caring community and live with purpose.</p>
+<div class="hero-actions"><a class="btn btn-primary" href="{{ route('visit') }}">Plan Your Visit</a><a class="btn btn-outline" href="https://youtube.com/@revelationhourm?si=gyH5QweTg4264hK-" target="_blank" rel="noopener">Watch Online</a></div>
+</div></section>
 
-<section class="section" id="services">
-    <div class="container">
-        <div class="section-heading">
-            <p class="eyebrow">Join Us</p>
-            <h2>Weekly Service Schedule</h2>
-            <p>There is a place for you in every gathering.</p>
-        </div>
-        <div class="service-grid">
-            <article class="card"><span>Tuesday</span><h3>Bible Study Service</h3><p>6:00 PM – 8:00 PM</p></article>
-            <article class="card"><span>Thursday</span><h3>MCS</h3><p>7:30 PM</p></article>
-            <article class="card"><span>Friday</span><h3>Camp Meeting</h3><p>6:00 PM – 10:00 PM</p></article>
-            <article class="card"><span>Sunday</span><h3>Business Service</h3><p>9:00 AM – 11:00 AM</p></article>
-            <article class="card"><span>Sunday</span><h3>Sunday Service</h3><p>11:00 AM – 1:00 PM</p></article>
-        </div>
-    </div>
-</section>
+<section class="quick-actions"><div class="container quick-grid">
+<a href="#services"><span>01</span><strong>Service Times</strong><small>Find your next gathering</small></a>
+<a href="{{ route('events') }}"><span>02</span><strong>Upcoming Events</strong><small>See what is happening</small></a>
+<a href="{{ route('ministries') }}"><span>03</span><strong>Find Community</strong><small>Grow and serve with others</small></a>
+<a href="{{ route('give') }}"><span>04</span><strong>Give & Partner</strong><small>Support the work of ministry</small></a>
+</div></section>
 
-<section class="section section-soft" id="about">
-    <div class="container">
-        <div class="section-heading">
-            <p class="eyebrow">About Our Church</p>
-            <h2>Revealing Christ, restoring lives</h2>
-            <p>Revelation Hour Ministries International is a Christ-centred ministry committed to the Word of God, spiritual growth, prayer, worship and service to people.</p>
-        </div>
-        <div class="about-grid">
-            <article class="about-card">
-                <span class="about-number">01</span>
-                <h3>Our Vision</h3>
-                <p>To raise a transformed people who know Christ, live by His Word and reveal His glory in every sphere of life.</p>
-            </article>
-            <article class="about-card">
-                <span class="about-number">02</span>
-                <h3>Our Mission</h3>
-                <p>To preach the Gospel, disciple believers, strengthen families and serve communities through the power and love of Jesus Christ.</p>
-            </article>
-            <article class="about-card">
-                <span class="about-number">03</span>
-                <h3>Our Foundation</h3>
-                <p>We are built on prayer, biblical teaching, worship, fellowship, compassion and faithful Christian service.</p>
-            </article>
-        </div>
-    </div>
-</section>
+<section class="section" id="services"><div class="container"><div class="section-heading"><p class="eyebrow">Join Us This Week</p><h2>Weekly Service Schedule</h2><p>Worship, biblical teaching, prayer and fellowship.</p></div>
+<div class="service-grid">
+<article class="card"><span>Tuesday</span><h3>Bible Study Service</h3><p>6:00 PM - 8:00 PM</p></article>
+<article class="card"><span>Thursday</span><h3>MCS</h3><p>7:30 PM</p></article>
+<article class="card"><span>Friday</span><h3>Camp Meeting</h3><p>6:00 PM - 10:00 PM</p></article>
+<article class="card"><span>Sunday</span><h3>Business Service</h3><p>9:00 AM - 11:00 AM</p></article>
+<article class="card"><span>Sunday</span><h3>Sunday Service</h3><p>11:00 AM - 1:00 PM</p></article>
+</div></div></section>
 
-<section class="section" id="welcome">
-    <div class="container two-column welcome-grid">
-        <div>
-            <p class="eyebrow">Welcome Center</p>
-            <h2>Come as you are and encounter God</h2>
-            <p>Whether you are visiting for the first time, looking for a church family or seeking spiritual renewal, you are welcome at Revelation Hour Ministries International.</p>
-            <p>Our desire is to help every person discover purpose, grow in faith and become firmly established in God’s Word.</p>
-            <a class="text-link" href="#contact">Plan your visit →</a>
-        </div>
-        <div class="logo-panel">
-            <img src="{{ asset('images/revelation-hour-logo.jpg') }}" alt="Revelation Hour Ministries International">
-        </div>
-    </div>
-</section>
+<section class="section section-soft"><div class="container split-feature">
+<div class="pastor-placeholder"><img src="{{ asset('images/revelation-hour-logo.jpg') }}" alt="RHMI"><span>Pastor portrait and official welcome will be added through the CMS.</span></div>
+<div><p class="eyebrow">Welcome to Our Family</p><h2 class="section-title-left">A place to know Christ and grow together</h2><p>Whether you are searching, growing or ready to serve, there is a place for you at Revelation Hour Ministries International.</p><div class="hero-actions"><a class="btn btn-primary" href="{{ route('about') }}">Discover Our Story</a><a class="btn btn-dark-outline" href="{{ route('contact') }}">Connect With Us</a></div></div>
+</div></section>
 
-<section class="section section-blue" id="ministries">
-    <div class="container">
-        <div class="section-heading light">
-            <p class="eyebrow">Ministries</p>
-            <h2>Grow, serve and belong</h2>
-            <p>Our ministry areas help people connect, mature spiritually and use their gifts in service.</p>
-        </div>
-        <div class="ministry-grid">
-            <article class="feature-card"><div class="feature-icon">✦</div><h3>Prayer Ministry</h3><p>Standing in faith through intercession, prayer meetings and spiritual support.</p></article>
-            <article class="feature-card"><div class="feature-icon">♫</div><h3>Worship Ministry</h3><p>Leading the church into heartfelt worship and a deeper encounter with God.</p></article>
-            <article class="feature-card"><div class="feature-icon">✝</div><h3>Evangelism</h3><p>Sharing the Gospel and reaching people with the message of salvation.</p></article>
-            <article class="feature-card"><div class="feature-icon">◎</div><h3>Youth Ministry</h3><p>Equipping young people to grow in faith, leadership and purpose.</p></article>
-            <article class="feature-card"><div class="feature-icon">❤</div><h3>Women & Families</h3><p>Building strong homes and encouraging women in faith, fellowship and service.</p></article>
-            <article class="feature-card"><div class="feature-icon">☀</div><h3>Community Outreach</h3><p>Demonstrating Christ’s love through compassion, practical help and outreach.</p></article>
-        </div>
-    </div>
-</section>
+<section class="section section-blue"><div class="container"><div class="section-heading light"><p class="eyebrow">Featured Ministries</p><h2>A place for every generation</h2><p>Ministry pictures and updates will later be managed from the CMS.</p></div>
+<div class="ministry-image-grid">@foreach($ministries as $ministry)<a class="ministry-image-card" href="{{ route('ministries.show', $ministry['slug']) }}"><div class="ministry-photo"><span>{{ $ministry['short'] }}</span></div><div class="ministry-card-copy"><h3>{{ $ministry['name'] }}</h3><p>{{ $ministry['summary'] }}</p><strong>Explore ministry →</strong></div></a>@endforeach</div>
+<div class="center-action"><a class="btn btn-primary" href="{{ route('ministries') }}">View All Ministries</a></div></div></section>
 
-<section class="section section-soft" id="live-events">
-    <div class="container">
-        <div class="section-heading">
-            <p class="eyebrow">What Is Happening Now</p>
-            <h2>Live Events & Church Updates</h2>
-            <p>View current event posters, ministry activities and special service announcements.</p>
-        </div>
+<section class="section section-soft"><div class="container"><div class="section-heading"><p class="eyebrow">What Is Happening</p><h2>Upcoming Events</h2><p>Published events from the CMS appear automatically.</p></div>
+<div class="event-carousel" data-event-carousel><button class="carousel-control previous" data-carousel-previous>‹</button><div class="event-track" data-event-track>
+@forelse($events as $event)<article class="event-slide {{ $loop->first ? 'active' : '' }}">@if($event->poster_url)<img src="{{ $event->poster_url }}" alt="{{ $event->title }}">@else<div class="event-placeholder"><span>{{ $event->title }}</span></div>@endif<div class="event-caption"><strong>{{ $event->title }}</strong><span>@if($event->event_date){{ $event->event_date->format('D, j M Y') }}@endif @if($event->location) | {{ $event->location }}@endif</span></div></article>
+@empty<article class="event-slide active"><img src="{{ asset('images/revelation-hour-logo.jpg') }}" alt="RHMI"><div class="event-caption"><strong>Welcome to Revelation Hour</strong><span>New events will appear here.</span></div></article>@endforelse
+</div><button class="carousel-control next" data-carousel-next>›</button></div><div class="carousel-dots" data-carousel-dots></div><div class="center-action"><a class="btn btn-dark-outline" href="{{ route('events') }}">View All Events</a></div>
+</div></section>
 
-        <div class="event-carousel" data-event-carousel>
-            <button class="carousel-control previous" type="button" aria-label="Previous event" data-carousel-previous>‹</button>
-            <div class="event-track" data-event-track>
-                <article class="event-slide active">
-                    <img src="{{ asset('images/revelation-hour-logo.jpg') }}" alt="Revelation Hour Ministries International announcement">
-                    <div class="event-caption"><strong>Welcome to Revelation Hour</strong><span>Official ministry updates will appear here.</span></div>
-                </article>
-                <article class="event-slide">
-                    <div class="event-placeholder"><span>Upcoming Event Poster</span><small>Uploaded by an approved administrator</small></div>
-                    <div class="event-caption"><strong>Special Services</strong><span>Stay connected for new announcements.</span></div>
-                </article>
-                <article class="event-slide">
-                    <div class="event-placeholder"><span>Church Activity Gallery</span><small>Photos from services and outreach</small></div>
-                    <div class="event-caption"><strong>Ministry in Action</strong><span>See what God is doing through the church.</span></div>
-                </article>
-            </div>
-            <button class="carousel-control next" type="button" aria-label="Next event" data-carousel-next>›</button>
-        </div>
+<section class="section sermon-section"><div class="container sermon-grid"><div class="sermon-media"><div class="play-mark">▶</div><p>Latest message</p></div><div><p class="eyebrow">Grow Through the Word</p><h2>Watch the latest sermon</h2><p>Explore sermons, worship experiences and ministry messages.</p><div class="hero-actions"><a class="btn btn-primary" href="https://youtube.com/@revelationhourm?si=gyH5QweTg4264hK-" target="_blank" rel="noopener">Visit YouTube</a><a class="btn btn-dark-outline" href="{{ route('sermons') }}">Browse Messages</a></div></div></div></section>
 
-        <div class="carousel-dots" data-carousel-dots></div>
+<section class="section section-soft"><div class="container two-column word-section"><div><p class="eyebrow">Daily Encouragement</p><h2>Word of the Day</h2><p>Receive scripture, devotion, posters and audio messages.</p><p class="scripture">“Your word is a lamp to my feet and a light to my path.” - Psalm 119:105</p></div><div class="upload-preview"><div class="preview-icon">✦</div><h3>Fresh encouragement every day</h3><p>Content will be published securely from the CMS.</p></div></div></section>
 
-        <aside class="local-admin-panel" data-local-admin-panel hidden>
-            <h3>Local Admin Preview: Add an Event Image</h3>
-            <p>This temporary local uploader is only shown when the page is opened with <code>?admin-preview=1</code>. The secure CMS uploader will replace it.</p>
-            <form data-event-upload-form>
-                <label>Event title<input type="text" name="title" maxlength="90" required></label>
-                <label>Short description<input type="text" name="description" maxlength="140"></label>
-                <label>Choose poster or photo<input type="file" name="image" accept="image/*" required></label>
-                <button class="btn btn-primary" type="submit">Add To Local Preview</button>
-            </form>
-            <button class="clear-local-events" type="button" data-clear-local-events>Clear local uploads</button>
-        </aside>
-    </div>
-</section>
+<section class="section involvement"><div class="container"><div class="section-heading"><p class="eyebrow">Take Your Next Step</p><h2>Grow, belong and make an impact</h2></div><div class="involvement-grid">
+<article><span>01</span><h3>Follow Jesus</h3><p>Learn our beliefs and grow in your relationship with Christ.</p><a href="{{ route('about') }}#beliefs">Explore our beliefs →</a></article>
+<article><span>02</span><h3>Join Community</h3><p>Build meaningful relationships through ministries and fellowship.</p><a href="{{ route('ministries') }}">Find community →</a></article>
+<article><span>03</span><h3>Serve Others</h3><p>Use your gifts to make a difference in church and community.</p><a href="{{ route('contact') }}">Start serving →</a></article>
+</div></div></section>
 
-<section class="section" id="word">
-    <div class="container two-column word-section">
-        <div>
-            <p class="eyebrow">Daily Encouragement</p>
-            <h2>Word of the Day</h2>
-            <p>Approved administrators will publish a scripture, typed message, poster or audio devotion from the private CMS dashboard.</p>
-            <p class="scripture">“Your word is a lamp to my feet and a light to my path.” — Psalm 119:105</p>
-        </div>
-        <div class="upload-preview">
-            <div class="preview-icon">✦</div>
-            <h3>Daily poster, message or audio</h3>
-            <p>Managed securely from the private administration dashboard.</p>
-        </div>
-    </div>
-</section>
+<section class="section giving-section"><div class="container giving-inner"><div><p class="eyebrow">Generosity Changes Lives</p><h2>Partner with the work of God</h2><p>Your giving supports ministry, outreach, discipleship and the Gospel.</p></div><a class="btn btn-primary" href="{{ route('give') }}">View Giving Information</a></div></section>
 @endsection

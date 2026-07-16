@@ -1,0 +1,4 @@
+@extends('layouts.app') @section('title','Ministries | RHMI') @section('content')
+<section class="page-hero"><div class="container"><p class="eyebrow">Find Your Place</p><h1>Ministries for every generation</h1><p>Grow in faith, build community and use your gifts.</p></div></section>
+<section class="section"><div class="container ministry-page-grid">@foreach($ministries as $ministry)<a class="ministry-page-card" href="{{ route('ministries.show',$ministry['slug']) }}"><div class="ministry-page-image"><span>{{ $ministry['short'] }}</span><small>CMS image slot</small></div><div class="ministry-page-copy"><h2>{{ $ministry['name'] }}</h2><p>{{ $ministry['summary'] }}</p><strong>View ministry →</strong></div></a>@endforeach</div></section>
+@endsection
