@@ -4,12 +4,14 @@ use App\Http\Controllers\Admin\BibleLookupController;
 use App\Http\Controllers\Admin\CampusController;
 use App\Http\Controllers\Admin\DailyWordController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\GalleryAlbumController;
 use App\Http\Controllers\Admin\MinistryController;
 use App\Http\Controllers\Admin\SermonController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Campus;
 use App\Models\DailyWord;
 use App\Models\Event;
+use App\Models\GalleryAlbum;
 use App\Models\Ministry;
 use App\Models\Sermon;
 use Illuminate\Support\Facades\Route;
@@ -100,6 +102,27 @@ Route::get('/events', function () {
     return view('pages.events', compact('events'));
 })->name('events');
 
+
+Route::get('/gallery', function () {
+    $albums = GalleryAlbum::query()
+        ->where('is_published', true)
+        ->withCount('images')
+        ->with('images')
+        ->orderByDesc('is_featured')
+        ->orderBy('sort_order')
+        ->orderByDesc('album_date')
+        ->get();
+
+    return view('pages.gallery', compact('albums'));
+})->name('gallery');
+
+Route::get('/gallery/{galleryAlbum:slug}', function (GalleryAlbum $galleryAlbum) {
+    abort_unless($galleryAlbum->is_published, 404);
+    $galleryAlbum->load('images');
+
+    return view('pages.gallery-show', ['album' => $galleryAlbum]);
+})->name('gallery.show');
+
 Route::get('/sermons', function () {
     $featured = Sermon::query()
         ->where('is_published', true)
@@ -138,6 +161,14 @@ Route::view('/admin', 'dashboard')
 Route::redirect('/dashboard', '/admin');
 
 Route::middleware('auth')->group(function () {
+    Route::resource('/admin/gallery', GalleryAlbumController::class)
+        ->except('show')
+        ->names('admin.gallery');
+
+    Route::delete('/admin/gallery/{gallery}/images/{image}', [GalleryAlbumController::class, 'destroyImage'])
+        ->name('admin.gallery.images.destroy');
+
+
     Route::resource('/admin/campuses', CampusController::class)
         ->except('show')
         ->names('admin.campuses');

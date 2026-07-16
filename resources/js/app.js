@@ -205,3 +205,49 @@ document.addEventListener('DOMContentLoaded', () => {
     dots[0].classList.add('is-active');
     start();
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const grid = document.querySelector('[data-gallery-grid]');
+    const lightbox = document.querySelector('[data-gallery-lightbox]');
+
+    if (!grid || !lightbox) return;
+
+    const buttons = Array.from(grid.querySelectorAll('[data-gallery-image]'));
+    const image = lightbox.querySelector('[data-gallery-lightbox-image]');
+    const caption = lightbox.querySelector('[data-gallery-lightbox-caption]');
+    const close = lightbox.querySelector('.gallery-lightbox-close');
+    const previous = lightbox.querySelector('.gallery-lightbox-arrow.previous');
+    const next = lightbox.querySelector('.gallery-lightbox-arrow.next');
+    let current = 0;
+
+    function show(index) {
+        current = (index + buttons.length) % buttons.length;
+        const button = buttons[current];
+        image.src = button.dataset.galleryImage;
+        image.alt = button.dataset.galleryCaption || 'Gallery image';
+        caption.textContent = button.dataset.galleryCaption || '';
+        lightbox.hidden = false;
+        document.body.style.overflow = 'hidden';
+    }
+
+    function hide() {
+        lightbox.hidden = true;
+        document.body.style.overflow = '';
+    }
+
+    buttons.forEach((button, index) => button.addEventListener('click', () => show(index)));
+    close.addEventListener('click', hide);
+    previous.addEventListener('click', () => show(current - 1));
+    next.addEventListener('click', () => show(current + 1));
+
+    lightbox.addEventListener('click', event => {
+        if (event.target === lightbox) hide();
+    });
+
+    document.addEventListener('keydown', event => {
+        if (lightbox.hidden) return;
+        if (event.key === 'Escape') hide();
+        if (event.key === 'ArrowLeft') show(current - 1);
+        if (event.key === 'ArrowRight') show(current + 1);
+    });
+});
