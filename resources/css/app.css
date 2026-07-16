@@ -796,3 +796,52 @@ button, input, textarea { font: inherit; }
 .admin-nav-sublink:hover{color:#fff;background:rgba(255,255,255,.09)}
 .admin-nav-sublink.is-active{color:#fff;border-left-color:#8de338;background:rgba(255,255,255,.14)}
 @media(max-height:720px){.admin-sidebar-scroll{padding-bottom:18px}}
+
+/* RHMI sidebar zero-gap override */
+.admin-sidebar-scroll{
+    display:block !important;
+    padding-top:12px !important;
+    padding-bottom:12px !important;
+}
+
+.admin-nav-group{
+    display:block !important;
+    margin:0 !important;
+    padding:0 !important;
+    min-height:0 !important;
+}
+
+.admin-nav-link,
+.admin-nav-group-button{
+    margin:0 !important;
+}
+
+.admin-nav-submenu{
+    display:none !important;
+    height:auto !important;
+    max-height:none !important;
+    min-height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    opacity:1 !important;
+    overflow:hidden !important;
+    grid-template-rows:none !important;
+}
+
+.admin-nav-submenu.is-open{
+    display:block !important;
+}
+
+.admin-nav-submenu-inner{
+    display:block !important;
+    min-height:0 !important;
+    height:auto !important;
+    margin:0 !important;
+    padding:0 !important;
+    overflow:hidden !important;
+}
+
+.admin-nav-sublink{
+    margin-top:0 !important;
+    margin-bottom:0 !important;
+}

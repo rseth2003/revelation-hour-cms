@@ -30,7 +30,7 @@
 <div class="min-h-screen lg:flex">
     <aside
         id="adminSidebar"
-        class="admin-sidebar fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-col bg-[#111b67] text-white shadow-2xl transition-transform duration-300 lg:static lg:translate-x-0"
+        class="admin-sidebar fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-col bg-[#1f2775] text-white shadow-2xl transition-transform duration-300 lg:static lg:translate-x-0"
     >
         <div class="flex h-20 shrink-0 items-center gap-3 border-b border-white/10 px-5">
             <img
@@ -45,7 +45,7 @@
             </div>
         </div>
 
-        <nav class="admin-sidebar-scroll flex-1 overflow-y-auto px-3 py-4">
+        <nav class="admin-sidebar-scroll flex-1 overflow-y-auto px-3 py-3">
             <a
                 href="{{ route('dashboard') }}"
                 class="admin-nav-link {{ request()->routeIs('dashboard') ? 'is-active' : '' }}"
@@ -69,12 +69,14 @@
                 </button>
 
                 <div class="admin-nav-submenu {{ $websiteOpen ? 'is-open' : '' }}" data-sidebar-submenu>
-                    <a href="{{ route('admin.daily-words.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.daily-words.*') ? 'is-active' : '' }}">Word of the Day</a>
-                    <a href="{{ route('admin.events.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.events.*') ? 'is-active' : '' }}">Live Events</a>
-                    <a href="{{ route('admin.sermons.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.sermons.*') ? 'is-active' : '' }}">Sermons</a>
-                    <a href="{{ route('admin.gallery.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.gallery.*') ? 'is-active' : '' }}">Gallery</a>
-                    <a href="{{ route('admin.prayer-requests.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.prayer-requests.*') ? 'is-active' : '' }}">Prayer Requests</a>
-                    <a href="#" class="admin-nav-sublink opacity-70">Website Settings</a>
+                    <div class="admin-nav-submenu-inner">
+                        <a href="{{ route('admin.daily-words.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.daily-words.*') ? 'is-active' : '' }}">Word of the Day</a>
+                        <a href="{{ route('admin.events.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.events.*') ? 'is-active' : '' }}">Live Events</a>
+                        <a href="{{ route('admin.sermons.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.sermons.*') ? 'is-active' : '' }}">Sermons</a>
+                        <a href="{{ route('admin.gallery.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.gallery.*') ? 'is-active' : '' }}">Gallery</a>
+                        <a href="{{ route('admin.prayer-requests.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.prayer-requests.*') ? 'is-active' : '' }}">Prayer Requests</a>
+                        <a href="#" class="admin-nav-sublink opacity-70">Website Settings</a>
+                    </div>
                 </div>
             </div>
 
@@ -93,13 +95,15 @@
                 </button>
 
                 <div class="admin-nav-submenu {{ $churchOpen ? 'is-open' : '' }}" data-sidebar-submenu>
-                    <a href="{{ route('admin.campuses.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.campuses.*') ? 'is-active' : '' }}">Campuses</a>
-                    <a href="{{ route('admin.ministries.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.ministries.*') ? 'is-active' : '' }}">Ministries</a>
-                    <a href="{{ route('admin.members.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.members.*') ? 'is-active' : '' }}">Members</a>
+                    <div class="admin-nav-submenu-inner">
+                        <a href="{{ route('admin.campuses.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.campuses.*') ? 'is-active' : '' }}">Campuses</a>
+                        <a href="{{ route('admin.ministries.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.ministries.*') ? 'is-active' : '' }}">Ministries</a>
+                        <a href="{{ route('admin.members.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.members.*') ? 'is-active' : '' }}">Members</a>
 
-                    @if(auth()->user()->hasRole('super_admin','senior_pastor','campus_pastor','admin','senior_usher','membership_officer'))
-                        <a href="{{ route('admin.attendance.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.attendance.*') ? 'is-active' : '' }}">Attendance</a>
-                    @endif
+                        @if(auth()->user()->hasRole('super_admin','senior_pastor','campus_pastor','admin','senior_usher','membership_officer'))
+                            <a href="{{ route('admin.attendance.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.attendance.*') ? 'is-active' : '' }}">Attendance</a>
+                        @endif
+                    </div>
                 </div>
             </div>
 
@@ -119,20 +123,17 @@
                     </button>
 
                     <div class="admin-nav-submenu {{ $administrationOpen ? 'is-open' : '' }}" data-sidebar-submenu>
-                        <a href="{{ route('admin.users.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}">Users and Roles</a>
-                        <a href="#" class="admin-nav-sublink opacity-70">Backups</a>
-                        <a href="#" class="admin-nav-sublink opacity-70">System Logs</a>
+                        <div class="admin-nav-submenu-inner">
+                            <a href="{{ route('admin.users.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}">Users and Roles</a>
+                            <a href="#" class="admin-nav-sublink opacity-70">Backups</a>
+                            <a href="#" class="admin-nav-sublink opacity-70">System Logs</a>
+                        </div>
                     </div>
                 </div>
             @endif
 
             <div class="admin-nav-group" data-sidebar-group>
-                <button
-                    type="button"
-                    class="admin-nav-group-button"
-                    data-sidebar-group-button
-                    aria-expanded="false"
-                >
+                <button type="button" class="admin-nav-group-button" data-sidebar-group-button aria-expanded="false">
                     <span class="flex min-w-0 items-center gap-3">
                         <span class="admin-nav-icon">📊</span>
                         <span>Reports</span>
@@ -141,19 +142,16 @@
                 </button>
 
                 <div class="admin-nav-submenu" data-sidebar-submenu>
-                    <a href="{{ route('admin.attendance.index') }}" class="admin-nav-sublink">Attendance Reports</a>
-                    <a href="{{ route('admin.members.index') }}" class="admin-nav-sublink">Membership Reports</a>
-                    <a href="{{ route('admin.prayer-requests.index') }}" class="admin-nav-sublink">Prayer Reports</a>
+                    <div class="admin-nav-submenu-inner">
+                        <a href="{{ route('admin.attendance.index') }}" class="admin-nav-sublink">Attendance Reports</a>
+                        <a href="{{ route('admin.members.index') }}" class="admin-nav-sublink">Membership Reports</a>
+                        <a href="{{ route('admin.prayer-requests.index') }}" class="admin-nav-sublink">Prayer Reports</a>
+                    </div>
                 </div>
             </div>
 
             <div class="admin-nav-group" data-sidebar-group>
-                <button
-                    type="button"
-                    class="admin-nav-group-button"
-                    data-sidebar-group-button
-                    aria-expanded="false"
-                >
+                <button type="button" class="admin-nav-group-button" data-sidebar-group-button aria-expanded="false">
                     <span class="flex min-w-0 items-center gap-3">
                         <span class="admin-nav-icon">✉</span>
                         <span>Communication</span>
@@ -162,19 +160,16 @@
                 </button>
 
                 <div class="admin-nav-submenu" data-sidebar-submenu>
-                    <a href="#" class="admin-nav-sublink opacity-70">SMS</a>
-                    <a href="#" class="admin-nav-sublink opacity-70">Email</a>
-                    <a href="#" class="admin-nav-sublink opacity-70">Notifications</a>
+                    <div class="admin-nav-submenu-inner">
+                        <a href="#" class="admin-nav-sublink opacity-70">SMS</a>
+                        <a href="#" class="admin-nav-sublink opacity-70">Email</a>
+                        <a href="#" class="admin-nav-sublink opacity-70">Notifications</a>
+                    </div>
                 </div>
             </div>
 
             <div class="admin-nav-group" data-sidebar-group>
-                <button
-                    type="button"
-                    class="admin-nav-group-button"
-                    data-sidebar-group-button
-                    aria-expanded="false"
-                >
+                <button type="button" class="admin-nav-group-button" data-sidebar-group-button aria-expanded="false">
                     <span class="flex min-w-0 items-center gap-3">
                         <span class="admin-nav-icon">⚙</span>
                         <span>Settings</span>
@@ -183,13 +178,15 @@
                 </button>
 
                 <div class="admin-nav-submenu" data-sidebar-submenu>
-                    <a href="#" class="admin-nav-sublink opacity-70">Website Settings</a>
-                    <a href="#" class="admin-nav-sublink opacity-70">General Settings</a>
+                    <div class="admin-nav-submenu-inner">
+                        <a href="#" class="admin-nav-sublink opacity-70">Website Settings</a>
+                        <a href="#" class="admin-nav-sublink opacity-70">General Settings</a>
+                    </div>
                 </div>
             </div>
         </nav>
 
-        <div class="shrink-0 border-t border-white/10 bg-[#111b67] p-4">
+        <div class="shrink-0 border-t border-white/10 bg-[#1f2775] p-3">
             <a
                 href="{{ route('home') }}"
                 target="_blank"
@@ -233,7 +230,7 @@
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button class="rounded-lg bg-[#111b67] px-3 py-2 text-sm font-semibold text-white">Logout</button>
+                    <button class="rounded-lg bg-[#1f2775] px-3 py-2 text-sm font-semibold text-white">Logout</button>
                 </form>
             </div>
         </header>
