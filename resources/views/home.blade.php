@@ -73,10 +73,6 @@
                 @endforeach
             </div>
         @endif
-
-        <div class="center-action">
-            <a class="btn btn-primary" href="{{ route('ministries') }}">View All Ministries</a>
-        </div>
     </div>
 </section>
 
@@ -85,7 +81,6 @@
         <div class="section-heading">
             <p class="eyebrow">What Is Happening</p>
             <h2>Upcoming Events</h2>
-            <p>Published events from the CMS appear automatically.</p>
         </div>
 
         <div class="event-carousel" data-event-carousel>
@@ -103,24 +98,15 @@
                         <div class="event-caption">
                             <strong>{{ $event->title }}</strong>
                             <span>
-                                @if($event->event_date)
-                                    {{ $event->event_date->format('D, j M Y') }}
-                                @endif
-
-                                @if($event->location)
-                                    {{ $event->location }}
-                                @endif
+                                @if($event->event_date){{ $event->event_date->format('D, j M Y') }}@endif
+                                @if($event->location) {{ $event->location }}@endif
                             </span>
                         </div>
                     </article>
                 @empty
                     <article class="event-slide active">
                         <img src="{{ asset('images/revelation-hour-logo.jpg') }}" alt="RHMI">
-
-                        <div class="event-caption">
-                            <strong>Welcome to Revelation Hour</strong>
-                            <span>New events will appear here.</span>
-                        </div>
+                        <div class="event-caption"><strong>Welcome to Revelation Hour</strong><span>New events will appear here.</span></div>
                     </article>
                 @endforelse
             </div>
@@ -129,6 +115,40 @@
         </div>
 
         <div class="carousel-dots" data-carousel-dots></div>
+    </div>
+</section>
+
+<section class="section sermon-section">
+    <div class="container sermon-grid">
+        <div class="sermon-media">
+            @if($featuredSermon && $featuredSermon->thumbnail_url)
+                <img src="{{ $featuredSermon->thumbnail_url }}" alt="{{ $featuredSermon->title }}" class="homepage-sermon-image">
+            @else
+                <div class="play-mark">▶</div>
+                <p>Latest message</p>
+            @endif
+        </div>
+
+        <div>
+            <p class="eyebrow">Grow Through the Word</p>
+            <h2>{{ $featuredSermon?->title ?? 'Watch the latest sermon' }}</h2>
+
+            @if($featuredSermon?->speaker)
+                <p><strong>Speaker:</strong> {{ $featuredSermon->speaker }}</p>
+            @endif
+
+            <p>{{ $featuredSermon?->description ?: 'Explore sermons, worship experiences and ministry messages from Revelation Hour Ministries International.' }}</p>
+
+            <div class="hero-actions">
+                @if($featuredSermon?->youtube_url)
+                    <a class="btn btn-primary" href="{{ $featuredSermon->youtube_url }}" target="_blank" rel="noopener">Watch Sermon</a>
+                @else
+                    <a class="btn btn-primary" href="https://youtube.com/@revelationhourm?si=gyH5QweTg4264hK-" target="_blank" rel="noopener">Visit YouTube</a>
+                @endif
+
+                <a class="btn btn-dark-outline" href="{{ route('sermons') }}">Browse Messages</a>
+            </div>
+        </div>
     </div>
 </section>
 @endsection

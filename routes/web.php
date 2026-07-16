@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\MinistryController;
+use App\Http\Controllers\Admin\SermonController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Event;
 use App\Models\Ministry;
+use App\Models\Sermon;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,7 +24,16 @@ Route::get('/', function () {
         ->limit(12)
         ->get();
 
-    return view('home', compact('events', 'ministries'));
+    $featuredSermon = Sermon::query()
+        ->where('is_published', true)
+        ->where('is_featured', true)
+        ->first()
+        ?? Sermon::query()
+            ->where('is_published', true)
+            ->orderByDesc('sermon_date')
+            ->first();
+
+    return view('home', compact('events', 'ministries', 'featuredSermon'));
 })->name('home');
 
 Route::view('/about', 'pages.about')->name('about');
@@ -53,7 +64,26 @@ Route::get('/events', function () {
     return view('pages.events', compact('events'));
 })->name('events');
 
-Route::view('/sermons', 'pages.sermons')->name('sermons');
+Route::get('/sermons', function () {
+    $featured = Sermon::query()
+        ->where('is_published', true)
+        ->where('is_featured', true)
+        ->first()
+        ?? Sermon::query()
+            ->where('is_published', true)
+            ->orderByDesc('sermon_date')
+            ->first();
+
+    $sermons = Sermon::query()
+        ->where('is_published', true)
+        ->when($featured, fn ($query) => $query->whereKeyNot($featured->id))
+        ->orderBy('sort_order')
+        ->orderByDesc('sermon_date')
+        ->get();
+
+    return view('pages.sermons', compact('featured', 'sermons'));
+})->name('sermons');
+
 Route::view('/plan-your-visit', 'pages.visit')->name('visit');
 Route::view('/give', 'pages.give')->name('give');
 Route::view('/contact', 'pages.contact')->name('contact');
@@ -72,6 +102,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('/admin/ministries', MinistryController::class)
         ->except('show')
         ->names('admin.ministries');
+
+    Route::resource('/admin/sermons', SermonController::class)
+        ->except('show')
+        ->names('admin.sermons');
 
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
