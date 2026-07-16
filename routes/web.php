@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\GalleryAlbumController;
 use App\Http\Controllers\Admin\MinistryController;
 use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PrayerRequestController as AdminPrayerRequestController;
 use App\Http\Controllers\Admin\SermonController;
@@ -169,6 +170,35 @@ Route::view('/admin', 'dashboard')
 Route::redirect('/dashboard', '/admin');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/admin/attendance', [AttendanceController::class, 'index'])
+        ->middleware('role:super_admin,senior_pastor,campus_pastor,admin,senior_usher,membership_officer')
+        ->name('admin.attendance.index');
+
+    Route::get('/admin/attendance/create', [AttendanceController::class, 'create'])
+        ->middleware('role:super_admin,senior_pastor,campus_pastor,admin,senior_usher,membership_officer')
+        ->name('admin.attendance.create');
+
+    Route::post('/admin/attendance', [AttendanceController::class, 'store'])
+        ->middleware('role:super_admin,senior_pastor,campus_pastor,admin,senior_usher,membership_officer')
+        ->name('admin.attendance.store');
+
+    Route::get('/admin/attendance/{service}/mark', [AttendanceController::class, 'mark'])
+        ->middleware('role:super_admin,senior_pastor,campus_pastor,admin,senior_usher,membership_officer')
+        ->name('admin.attendance.mark');
+
+    Route::put('/admin/attendance/{service}/mark', [AttendanceController::class, 'save'])
+        ->middleware('role:super_admin,senior_pastor,campus_pastor,admin,senior_usher,membership_officer')
+        ->name('admin.attendance.save');
+
+    Route::get('/admin/attendance/{service}', [AttendanceController::class, 'show'])
+        ->middleware('role:super_admin,senior_pastor,campus_pastor,admin,senior_usher,membership_officer')
+        ->name('admin.attendance.show');
+
+    Route::delete('/admin/attendance/{service}', [AttendanceController::class, 'destroy'])
+        ->middleware('role:super_admin,senior_pastor,campus_pastor,admin')
+        ->name('admin.attendance.destroy');
+
+
     Route::resource('/admin/users', UserController::class)
         ->except('show')
         ->middleware('role:super_admin,senior_pastor,admin')

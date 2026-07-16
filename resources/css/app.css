@@ -778,3 +778,21 @@ button, input, textarea { font: inherit; }
 @keyframes rhmiToastIn{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
 @keyframes rhmiToastOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-14px)}}
 @media(max-width:620px){.rhmi-toast-wrap{top:74px;right:16px;left:16px;width:auto}}
+
+.admin-sidebar-scroll{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.22) transparent}
+.admin-sidebar-scroll::-webkit-scrollbar{width:7px}
+.admin-sidebar-scroll::-webkit-scrollbar-thumb{border-radius:999px;background:rgba(255,255,255,.22)}
+.admin-nav-link,.admin-nav-group-button{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px;padding:12px 14px;border:0;border-radius:12px;color:#fff;background:transparent;text-align:left;font-size:.95rem;font-weight:700;transition:background .2s,transform .2s}
+.admin-nav-link:hover,.admin-nav-group-button:hover{background:rgba(255,255,255,.10)}
+.admin-nav-link.is-active,.admin-nav-group-button.is-open{background:rgba(255,255,255,.16);box-shadow:inset 3px 0 0 #8de338}
+.admin-nav-icon{display:inline-grid;width:24px;place-items:center;flex:0 0 auto}
+.admin-nav-chevron{font-size:1rem;transition:transform .22s ease}
+.admin-nav-group-button.is-open .admin-nav-chevron{transform:rotate(180deg)}
+.admin-nav-submenu{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .25s ease,opacity .25s ease}
+.admin-nav-submenu>*{overflow:hidden}
+.admin-nav-submenu.is-open{grid-template-rows:1fr;opacity:1}
+.admin-nav-submenu::before{content:"";display:block;height:2px}
+.admin-nav-sublink{display:block;margin:2px 0 2px 38px;padding:9px 12px;border-left:2px solid rgba(255,255,255,.16);border-radius:0 10px 10px 0;color:#dbeafe;font-size:.88rem;font-weight:600;transition:background .2s,color .2s,border-color .2s}
+.admin-nav-sublink:hover{color:#fff;background:rgba(255,255,255,.09)}
+.admin-nav-sublink.is-active{color:#fff;border-left-color:#8de338;background:rgba(255,255,255,.14)}
+@media(max-height:720px){.admin-sidebar-scroll{padding-bottom:18px}}

@@ -46,6 +46,9 @@
 @if(auth()->user()->hasRole('super_admin','senior_pastor','admin'))
 @include('partials.users-dashboard-card')
 @endif
+@if(auth()->user()->hasRole('super_admin','senior_pastor','campus_pastor','admin','senior_usher','membership_officer'))
+@include('partials.attendance-dashboard-card')
+@endif
 </section>
 
     <div class="mb-5 mt-10">
