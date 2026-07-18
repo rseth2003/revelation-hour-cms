@@ -1,0 +1,30 @@
+@foreach($heroSlides as $slide)
+<article class="home-hero-slide home-hero-media-slide">
+@if($slide->background_image_url)
+<div class="home-hero-background" style="background-image:url('{{ $slide->background_image_url }}');background-size:cover;background-position:center;"></div>
+@else
+<div class="home-hero-background home-hero-welcome"></div>
+@endif
+<div class="home-hero-shade" style="background:rgba(7,47,104,{{ number_format($slide->overlay_opacity / 100,2,'.','') }});"></div>
+<div class="container {{ $slide->poster_image_url ? 'home-hero-media-layout' : 'home-hero-content' }}">
+<div class="{{ $slide->poster_image_url ? 'home-hero-media-copy' : '' }}">
+@if($slide->subtitle)<p class="eyebrow">{{ $slide->subtitle }}</p>@endif
+<h2>{{ $slide->title }}</h2>
+@if($slide->description)<p class="home-hero-copy">{{ $slide->description }}</p>@endif
+@if($slide->primary_button_text || $slide->secondary_button_text)
+<div class="hero-actions">
+@if($slide->primary_button_text && $slide->primary_button_url)
+<a class="btn btn-primary" href="{{ $slide->primary_button_url }}" @if($slide->open_links_in_new_tab) target="_blank" rel="noopener noreferrer" @endif>{{ $slide->primary_button_text }}</a>
+@endif
+@if($slide->secondary_button_text && $slide->secondary_button_url)
+<a class="btn btn-outline" href="{{ $slide->secondary_button_url }}" @if($slide->open_links_in_new_tab) target="_blank" rel="noopener noreferrer" @endif>{{ $slide->secondary_button_text }}</a>
+@endif
+</div>
+@endif
+</div>
+@if($slide->poster_image_url)
+<div class="home-hero-poster-frame"><img src="{{ $slide->poster_image_url }}" alt="{{ $slide->title }}"></div>
+@endif
+</div>
+</article>
+@endforeach

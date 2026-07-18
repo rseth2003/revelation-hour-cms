@@ -3,7 +3,7 @@
         <p class="text-sm font-semibold uppercase tracking-[0.25em] text-lime-300">Welcome back</p>
         <h2 class="mt-2 text-3xl font-bold">{{ auth()->user()->name }}</h2>
         <p class="mt-2 max-w-2xl text-blue-100">
-            Manage every completed website module and track what we are building next.
+            Manage church content, members, events, ministries, attendance and communications from one secure administration dashboard.
         </p>
     </section>
 
@@ -50,6 +50,7 @@
 @include('partials.attendance-dashboard-card')
 @endif
 @include('partials.settings-dashboard-card')
+@include('partials.hero-slider-dashboard-card')
 </section>
 
     <div class="mb-5 mt-10">
@@ -59,11 +60,7 @@
 
     <section class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
         @foreach([
-            
-            ['Hero Slider Manager','Manage custom homepage slides and campaigns.','▤','bg-sky-100 text-sky-700'],
-            
-            
-            ['Communication Center','SMS, email and scheduled event reminders.','✉','bg-emerald-100 text-emerald-700'],
+['Communication Center','SMS, email and scheduled event reminders.','✉','bg-emerald-100 text-emerald-700'],
             ['Analytics','Website activity and CMS content statistics.','▥','bg-teal-100 text-teal-700'],
         ] as [$title,$description,$icon,$accent])
             <article class="rounded-2xl border bg-white p-5 shadow-sm">
