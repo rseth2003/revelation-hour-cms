@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AttendanceRecord;
+use App\Models\AttendanceSession;
 use App\Models\Campus;
-use App\Models\ChurchService;
+use App\Models\Event;
 use App\Models\Member;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,156 +15,199 @@ use Illuminate\View\View;
 
 class AttendanceController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $services = ChurchService::query()
-            ->with('campus')
-            ->withCount([
-                'attendanceRecords as present_count' => fn ($query) => $query->where('attendance_status', 'present'),
-                'attendanceRecords as absent_count' => fn ($query) => $query->where('attendance_status', 'absent'),
-            ])
-            ->orderByDesc('service_date')
-            ->orderByDesc('start_time')
-            ->paginate(15);
+        $query = AttendanceSession::with(['campus', 'event'])
+            ->latest('held_at');
+
+        if ($request->filled('service_type')) {
+            $query->where('service_type', $request->string('service_type'));
+        }
+
+        if ($request->filled('campus_id')) {
+            $query->where('campus_id', $request->integer('campus_id'));
+        }
+
+        $sessions = $query->paginate(15)->withQueryString();
 
         $stats = [
-            'services' => ChurchService::count(),
-            'this_month' => AttendanceRecord::where('attendance_status', 'present')
-                ->whereMonth('checked_in_at', now()->month)
-                ->whereYear('checked_in_at', now()->year)
-                ->count(),
-            'today' => AttendanceRecord::where('attendance_status', 'present')
-                ->whereDate('checked_in_at', today())
-                ->count(),
+            'sessions' => AttendanceSession::count(),
+            'this_month' => AttendanceSession::whereBetween('held_at', [
+                now()->startOfMonth(),
+                now()->endOfMonth(),
+            ])->sum('total_attendance'),
+            'members_present' => AttendanceSession::sum('registered_members_present'),
+            'visitors' => AttendanceSession::selectRaw(
+                'COALESCE(SUM(adult_visitors + youth_visitors + children_visitors), 0) as total'
+            )->value('total') ?? 0,
         ];
 
-        return view('admin.attendance.index', compact('services', 'stats'));
+        return view('admin.attendance.index', [
+            'sessions' => $sessions,
+            'stats' => $stats,
+            'campuses' => Campus::orderBy('name')->get(),
+            'serviceTypes' => AttendanceSession::SERVICE_TYPES,
+        ]);
     }
 
     public function create(): View
     {
-        $campuses = Campus::query()
-            ->orderByDesc('is_main_campus')
-            ->orderBy('name')
-            ->get();
-
-        return view('admin.attendance.create', compact('campuses'));
+        return view('admin.attendance.create', [
+            'campuses' => Campus::orderBy('name')->get(),
+            'events' => Event::orderByDesc('event_date')->get(),
+            'members' => Member::with(['campus', 'ministry'])
+                ->where('membership_status', 'active')
+                ->orderBy('first_name')
+                ->orderBy('last_name')
+                ->get(),
+            'serviceTypes' => AttendanceSession::SERVICE_TYPES,
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
     {
-        $data = $request->validate([
-            'title' => ['required', 'string', 'max:180'],
-            'service_type' => ['required', 'in:'.implode(',', array_keys(ChurchService::TYPES))],
-            'campus_id' => ['nullable', 'exists:campuses,id'],
-            'service_date' => ['required', 'date_format:Y-m-d'],
-            'start_time' => ['nullable', 'date_format:H:i'],
-            'end_time' => ['nullable', 'date_format:H:i'],
-            'status' => ['required', 'in:'.implode(',', array_keys(ChurchService::STATUSES))],
-            'notes' => ['nullable', 'string', 'max:4000'],
-        ]);
+        $data = $this->validatedData($request);
 
-        $service = ChurchService::create($data);
+        $session = DB::transaction(function () use ($data) {
+            $memberIds = collect($data['member_ids'] ?? [])
+                ->map(fn ($id) => (int) $id)
+                ->unique()
+                ->values();
+
+            $visitorTotal = (int) $data['adult_visitors']
+                + (int) $data['youth_visitors']
+                + (int) $data['children_visitors'];
+
+            $session = AttendanceSession::create([
+                'created_by' => auth()->id(),
+                'campus_id' => $data['campus_id'] ?? null,
+                'event_id' => $data['event_id'] ?? null,
+                'title' => $data['title'],
+                'service_type' => $data['service_type'],
+                'held_at' => $data['held_at'],
+                'adult_visitors' => $data['adult_visitors'],
+                'youth_visitors' => $data['youth_visitors'],
+                'children_visitors' => $data['children_visitors'],
+                'registered_members_present' => $memberIds->count(),
+                'total_attendance' => $memberIds->count() + $visitorTotal,
+                'notes' => $data['notes'] ?? null,
+            ]);
+
+            foreach ($memberIds as $memberId) {
+                AttendanceRecord::create([
+                    'attendance_session_id' => $session->id,
+                    'member_id' => $memberId,
+                    'status' => 'present',
+                    'checked_in_at' => now(),
+                ]);
+            }
+
+            return $session;
+        });
 
         return redirect()
-            ->route('admin.attendance.mark', $service)
-            ->with('success', 'Service created. You can now mark attendance.');
+            ->route('admin.attendance.show', $session)
+            ->with('success', 'Attendance session recorded successfully.');
     }
 
-    public function mark(Request $request, ChurchService $service): View
+    public function show(AttendanceSession $attendance): View
     {
-        $query = Member::query()
-            ->with(['campus', 'ministry'])
-            ->whereIn('membership_status', ['active', 'pending']);
-
-        if ($service->campus_id) {
-            $query->where(function ($subQuery) use ($service) {
-                $subQuery
-                    ->where('campus_id', $service->campus_id)
-                    ->orWhereNull('campus_id');
-            });
-        }
-
-        if ($request->filled('search')) {
-            $search = trim((string) $request->input('search'));
-
-            $query->where(function ($subQuery) use ($search) {
-                $subQuery
-                    ->where('first_name', 'like', '%'.$search.'%')
-                    ->orWhere('last_name', 'like', '%'.$search.'%')
-                    ->orWhere('other_names', 'like', '%'.$search.'%')
-                    ->orWhere('member_number', 'like', '%'.$search.'%')
-                    ->orWhere('phone', 'like', '%'.$search.'%');
-            });
-        }
-
-        $members = $query->orderBy('first_name')->orderBy('last_name')->paginate(40)->withQueryString();
-
-        $existing = AttendanceRecord::query()
-            ->where('church_service_id', $service->id)
-            ->get()
-            ->keyBy('member_id');
-
-        $service->load('campus');
-
-        return view('admin.attendance.mark', compact('service', 'members', 'existing'));
-    }
-
-    public function save(Request $request, ChurchService $service): RedirectResponse
-    {
-        $data = $request->validate([
-            'attendance' => ['nullable', 'array'],
-            'attendance.*' => ['in:present,absent,excused'],
+        $attendance->load([
+            'campus',
+            'event',
+            'records.member.campus',
+            'records.member.ministry',
         ]);
 
-        $attendance = $data['attendance'] ?? [];
+        return view('admin.attendance.show', compact('attendance'));
+    }
 
-        DB::transaction(function () use ($attendance, $service, $request) {
-            foreach ($attendance as $memberId => $status) {
-                AttendanceRecord::updateOrCreate(
-                    [
-                        'church_service_id' => $service->id,
-                        'member_id' => (int) $memberId,
-                    ],
-                    [
-                        'attendance_status' => $status,
-                        'checked_in_at' => now(),
-                        'recorded_by' => $request->user()->id,
-                    ]
-                );
+    public function edit(AttendanceSession $attendance): View
+    {
+        $attendance->load('records');
+
+        return view('admin.attendance.edit', [
+            'attendance' => $attendance,
+            'campuses' => Campus::orderBy('name')->get(),
+            'events' => Event::orderByDesc('event_date')->get(),
+            'members' => Member::with(['campus', 'ministry'])
+                ->where('membership_status', 'active')
+                ->orderBy('first_name')
+                ->orderBy('last_name')
+                ->get(),
+            'selectedMemberIds' => $attendance->records->pluck('member_id')->all(),
+            'serviceTypes' => AttendanceSession::SERVICE_TYPES,
+        ]);
+    }
+
+    public function update(Request $request, AttendanceSession $attendance): RedirectResponse
+    {
+        $data = $this->validatedData($request);
+
+        DB::transaction(function () use ($attendance, $data) {
+            $memberIds = collect($data['member_ids'] ?? [])
+                ->map(fn ($id) => (int) $id)
+                ->unique()
+                ->values();
+
+            $visitorTotal = (int) $data['adult_visitors']
+                + (int) $data['youth_visitors']
+                + (int) $data['children_visitors'];
+
+            $attendance->update([
+                'campus_id' => $data['campus_id'] ?? null,
+                'event_id' => $data['event_id'] ?? null,
+                'title' => $data['title'],
+                'service_type' => $data['service_type'],
+                'held_at' => $data['held_at'],
+                'adult_visitors' => $data['adult_visitors'],
+                'youth_visitors' => $data['youth_visitors'],
+                'children_visitors' => $data['children_visitors'],
+                'registered_members_present' => $memberIds->count(),
+                'total_attendance' => $memberIds->count() + $visitorTotal,
+                'notes' => $data['notes'] ?? null,
+            ]);
+
+            $attendance->records()->delete();
+
+            foreach ($memberIds as $memberId) {
+                AttendanceRecord::create([
+                    'attendance_session_id' => $attendance->id,
+                    'member_id' => $memberId,
+                    'status' => 'present',
+                    'checked_in_at' => now(),
+                ]);
             }
         });
 
         return redirect()
-            ->route('admin.attendance.mark', $service)
-            ->with('success', 'Attendance saved successfully.');
+            ->route('admin.attendance.show', $attendance)
+            ->with('success', 'Attendance session updated successfully.');
     }
 
-    public function show(ChurchService $service): View
+    public function destroy(AttendanceSession $attendance): RedirectResponse
     {
-        $service->load('campus');
-
-        $records = AttendanceRecord::query()
-            ->with(['member.campus', 'recorder'])
-            ->where('church_service_id', $service->id)
-            ->orderBy('attendance_status')
-            ->paginate(40);
-
-        $counts = [
-            'present' => AttendanceRecord::where('church_service_id', $service->id)->where('attendance_status', 'present')->count(),
-            'absent' => AttendanceRecord::where('church_service_id', $service->id)->where('attendance_status', 'absent')->count(),
-            'excused' => AttendanceRecord::where('church_service_id', $service->id)->where('attendance_status', 'excused')->count(),
-        ];
-
-        return view('admin.attendance.show', compact('service', 'records', 'counts'));
-    }
-
-    public function destroy(ChurchService $service): RedirectResponse
-    {
-        $service->delete();
+        $attendance->delete();
 
         return redirect()
             ->route('admin.attendance.index')
-            ->with('success', 'Service and its attendance records were deleted.');
+            ->with('success', 'Attendance session deleted.');
+    }
+
+    private function validatedData(Request $request): array
+    {
+        return $request->validate([
+            'title' => ['required', 'string', 'max:180'],
+            'service_type' => ['required', 'in:' . implode(',', array_keys(AttendanceSession::SERVICE_TYPES))],
+            'held_at' => ['required', 'date'],
+            'campus_id' => ['nullable', 'exists:campuses,id'],
+            'event_id' => ['nullable', 'exists:events,id'],
+            'adult_visitors' => ['required', 'integer', 'min:0', 'max:100000'],
+            'youth_visitors' => ['required', 'integer', 'min:0', 'max:100000'],
+            'children_visitors' => ['required', 'integer', 'min:0', 'max:100000'],
+            'member_ids' => ['nullable', 'array'],
+            'member_ids.*' => ['integer', 'exists:members,id'],
+            'notes' => ['nullable', 'string', 'max:3000'],
+        ]);
     }
 }

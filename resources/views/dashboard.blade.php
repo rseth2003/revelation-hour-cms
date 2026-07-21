@@ -51,6 +51,8 @@
 @endif
 @include('partials.settings-dashboard-card')
 @include('partials.hero-slider-dashboard-card')
+@include('partials.communication-dashboard-card')
+@include('partials.analytics-dashboard-card')
 </section>
 
     <div class="mb-5 mt-10">
@@ -60,8 +62,6 @@
 
     <section class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
         @foreach([
-['Communication Center','SMS, email and scheduled event reminders.','✉','bg-emerald-100 text-emerald-700'],
-            ['Analytics','Website activity and CMS content statistics.','▥','bg-teal-100 text-teal-700'],
         ] as [$title,$description,$icon,$accent])
             <article class="rounded-2xl border bg-white p-5 shadow-sm">
                 <div class="mb-4 flex justify-between">

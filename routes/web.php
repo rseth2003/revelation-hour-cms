@@ -195,35 +195,6 @@ Route::middleware('auth')->group(function () {
         ->name('admin.settings.update');
 
 
-    Route::get('/admin/attendance', [AttendanceController::class, 'index'])
-        ->middleware('role:super_admin,senior_pastor,campus_pastor,admin,senior_usher,membership_officer')
-        ->name('admin.attendance.index');
-
-    Route::get('/admin/attendance/create', [AttendanceController::class, 'create'])
-        ->middleware('role:super_admin,senior_pastor,campus_pastor,admin,senior_usher,membership_officer')
-        ->name('admin.attendance.create');
-
-    Route::post('/admin/attendance', [AttendanceController::class, 'store'])
-        ->middleware('role:super_admin,senior_pastor,campus_pastor,admin,senior_usher,membership_officer')
-        ->name('admin.attendance.store');
-
-    Route::get('/admin/attendance/{service}/mark', [AttendanceController::class, 'mark'])
-        ->middleware('role:super_admin,senior_pastor,campus_pastor,admin,senior_usher,membership_officer')
-        ->name('admin.attendance.mark');
-
-    Route::put('/admin/attendance/{service}/mark', [AttendanceController::class, 'save'])
-        ->middleware('role:super_admin,senior_pastor,campus_pastor,admin,senior_usher,membership_officer')
-        ->name('admin.attendance.save');
-
-    Route::get('/admin/attendance/{service}', [AttendanceController::class, 'show'])
-        ->middleware('role:super_admin,senior_pastor,campus_pastor,admin,senior_usher,membership_officer')
-        ->name('admin.attendance.show');
-
-    Route::delete('/admin/attendance/{service}', [AttendanceController::class, 'destroy'])
-        ->middleware('role:super_admin,senior_pastor,campus_pastor,admin')
-        ->name('admin.attendance.destroy');
-
-
     Route::resource('/admin/users', UserController::class)
         ->except('show')
         ->middleware('role:super_admin,senior_pastor,admin')
@@ -288,3 +259,9 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+require __DIR__.'/communication.php';
+
+require __DIR__.'/analytics.php';
+
+require __DIR__.'/attendance.php';

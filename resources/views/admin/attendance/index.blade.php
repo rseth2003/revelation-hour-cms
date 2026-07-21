@@ -1,68 +1,84 @@
-<x-admin-layout title="Attendance | RHMI CMS" heading="Attendance">
-<div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+<x-admin-layout>
+<div class="mb-8 flex flex-wrap items-start justify-between gap-4">
     <div>
-        <h2 class="text-2xl font-bold text-[#072f68]">Attendance Management</h2>
-        <p class="mt-1 text-sm text-slate-600">Create services and record member or visitor attendance.</p>
+        <p class="text-sm font-semibold uppercase tracking-[.2em] text-lime-600">Church Operations</p>
+        <h1 class="text-3xl font-bold text-[#072f68]">Attendance Management</h1>
+        <p class="mt-2 text-slate-600">Record services, events, members present and visitor totals.</p>
     </div>
-
-    <a href="{{ route('admin.attendance.create') }}" class="rounded-xl bg-lime-500 px-5 py-3 font-bold text-[#072f68]">
-        + New Service
-    </a>
+    <a href="{{ route('admin.attendance.create') }}" class="rounded-xl bg-[#072f68] px-5 py-3 font-semibold text-white">Record attendance</a>
 </div>
 
 @if(session('success'))
-<div class="mb-5 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-green-800">{{ session('success') }}</div>
+    <div class="mb-6 rounded-xl bg-green-50 p-4 text-green-700">{{ session('success') }}</div>
 @endif
 
-<div class="mb-6 grid gap-4 sm:grid-cols-3">
-    <article class="rounded-2xl border bg-white p-5 shadow-sm">
-        <span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-blue-700">Services Created</span>
-        <p class="mt-4 text-3xl font-bold text-[#072f68]">{{ $stats['services'] }}</p>
-    </article>
-
-    <article class="rounded-2xl border bg-white p-5 shadow-sm">
-        <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">Present Today</span>
-        <p class="mt-4 text-3xl font-bold text-[#072f68]">{{ $stats['today'] }}</p>
-    </article>
-
-    <article class="rounded-2xl border bg-white p-5 shadow-sm">
-        <span class="rounded-full bg-purple-100 px-3 py-1 text-xs font-bold text-purple-700">Present This Month</span>
-        <p class="mt-4 text-3xl font-bold text-[#072f68]">{{ $stats['this_month'] }}</p>
-    </article>
-</div>
-
-@if($services->isEmpty())
-<div class="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center text-slate-500">
-    No church services have been created yet.
-</div>
-@else
-<div class="grid gap-4">
-@foreach($services as $service)
+<section class="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+@foreach([
+    ['Sessions',$stats['sessions'],'◷','Recorded attendance sessions'],
+    ['This Month',$stats['this_month'],'▥','Total attendance this month'],
+    ['Members Present',$stats['members_present'],'👥','All recorded member check-ins'],
+    ['Visitors',$stats['visitors'],'◎','Unregistered visitors recorded'],
+] as [$label,$value,$icon,$description])
 <article class="rounded-2xl border bg-white p-5 shadow-sm">
-<div class="flex flex-wrap items-start justify-between gap-5">
-<div>
-    <p class="text-xs font-bold uppercase tracking-wide text-lime-600">
-        {{ \App\Models\ChurchService::TYPES[$service->service_type] ?? ucfirst(str_replace('_',' ',$service->service_type)) }}
-    </p>
-    <h3 class="mt-1 text-xl font-bold text-[#072f68]">{{ $service->title }}</h3>
-    <p class="mt-2 text-sm text-slate-600">
-        {{ $service->service_date->format('j M Y') }}
-        @if($service->start_time) at {{ \Illuminate\Support\Carbon::parse($service->start_time)->format('g:i A') }} @endif
-    </p>
-    <p class="mt-1 text-sm text-slate-500">{{ $service->campus?->name ?: 'All campuses' }}</p>
-</div>
-
-<div class="flex flex-wrap items-center gap-3">
-    <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">{{ $service->present_count }} Present</span>
-    <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-bold text-red-700">{{ $service->absent_count }} Absent</span>
-    <a href="{{ route('admin.attendance.mark',$service) }}" class="rounded-lg bg-[#072f68] px-4 py-2 text-sm font-semibold text-white">Mark Attendance</a>
-    <a href="{{ route('admin.attendance.show',$service) }}" class="rounded-lg border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700">View Report</a>
-</div>
-</div>
+    <div class="flex items-start justify-between gap-4">
+        <div>
+            <p class="text-sm font-semibold text-slate-500">{{ $label }}</p>
+            <p class="mt-2 text-3xl font-bold text-[#072f68]">{{ number_format($value) }}</p>
+            <p class="mt-1 text-xs text-slate-400">{{ $description }}</p>
+        </div>
+        <span class="grid h-11 w-11 place-items-center rounded-xl bg-slate-100">{{ $icon }}</span>
+    </div>
 </article>
 @endforeach
-</div>
+</section>
 
-<div class="mt-6">{{ $services->links() }}</div>
-@endif
+<form method="GET" class="mb-6 grid gap-4 rounded-2xl border bg-white p-5 shadow-sm sm:grid-cols-[1fr_1fr_auto]">
+    <select name="service_type" class="rounded-xl border-slate-300">
+        <option value="">All service types</option>
+        @foreach($serviceTypes as $key=>$label)
+            <option value="{{ $key }}" @selected(request('service_type') === $key)>{{ $label }}</option>
+        @endforeach
+    </select>
+    <select name="campus_id" class="rounded-xl border-slate-300">
+        <option value="">All campuses</option>
+        @foreach($campuses as $campus)
+            <option value="{{ $campus->id }}" @selected((string) request('campus_id') === (string) $campus->id)>{{ $campus->name }}</option>
+        @endforeach
+    </select>
+    <button class="rounded-xl bg-slate-100 px-5 py-3 font-semibold text-slate-700">Filter</button>
+</form>
+
+<div class="overflow-hidden rounded-2xl border bg-white shadow-sm">
+    <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-slate-50">
+            <tr>
+                <th class="px-5 py-4 text-left text-xs uppercase text-slate-500">Session</th>
+                <th class="px-5 py-4 text-left text-xs uppercase text-slate-500">Date</th>
+                <th class="px-5 py-4 text-left text-xs uppercase text-slate-500">Campus</th>
+                <th class="px-5 py-4 text-left text-xs uppercase text-slate-500">Members</th>
+                <th class="px-5 py-4 text-left text-xs uppercase text-slate-500">Visitors</th>
+                <th class="px-5 py-4 text-left text-xs uppercase text-slate-500">Total</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+        @forelse($sessions as $session)
+            @php $visitors = $session->adult_visitors + $session->youth_visitors + $session->children_visitors; @endphp
+            <tr>
+                <td class="px-5 py-4">
+                    <a href="{{ route('admin.attendance.show', ['attendance' => $session->id]) }}" class="font-bold text-[#072f68]">{{ $session->title }}</a>
+                    <p class="text-xs text-slate-500">{{ $serviceTypes[$session->service_type] ?? str($session->service_type)->replace('_',' ')->title() }}</p>
+                </td>
+                <td class="px-5 py-4 text-sm">{{ $session->held_at->format('d M Y, H:i') }}</td>
+                <td class="px-5 py-4 text-sm">{{ $session->campus->name ?? 'Not selected' }}</td>
+                <td class="px-5 py-4 font-semibold">{{ $session->registered_members_present }}</td>
+                <td class="px-5 py-4 font-semibold">{{ $visitors }}</td>
+                <td class="px-5 py-4 text-lg font-bold text-[#072f68]">{{ $session->total_attendance }}</td>
+            </tr>
+        @empty
+            <tr><td colspan="6" class="px-5 py-12 text-center text-slate-500">No attendance sessions recorded yet.</td></tr>
+        @endforelse
+        </tbody>
+    </table>
+</div>
+<div class="mt-6">{{ $sessions->links() }}</div>
 </x-admin-layout>

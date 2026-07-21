@@ -147,6 +147,7 @@
                         <a href="{{ route('admin.attendance.index') }}" class="admin-nav-sublink">Attendance Reports</a>
                         <a href="{{ route('admin.members.index') }}" class="admin-nav-sublink">Membership Reports</a>
                         <a href="{{ route('admin.prayer-requests.index') }}" class="admin-nav-sublink">Prayer Reports</a>
+                        <a href="{{ route('admin.analytics.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.analytics.*') ? 'is-active' : '' }}">Analytics Dashboard</a>
                     </div>
                 </div>
             </div>
@@ -162,9 +163,9 @@
 
                 <div class="admin-nav-submenu" data-sidebar-submenu>
                     <div class="admin-nav-submenu-inner">
-                        <a href="#" class="admin-nav-sublink opacity-70">SMS</a>
-                        <a href="#" class="admin-nav-sublink opacity-70">Email</a>
-                        <a href="#" class="admin-nav-sublink opacity-70">Notifications</a>
+                        <a href="{{ route('admin.communication.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.communication.index','admin.communication.show') ? 'is-active' : '' }}">Message Center</a>
+                        <a href="{{ route('admin.communication.create') }}" class="admin-nav-sublink {{ request()->routeIs('admin.communication.create') ? 'is-active' : '' }}">Compose Message</a>
+                        <a href="{{ route('admin.communication.templates') }}" class="admin-nav-sublink {{ request()->routeIs('admin.communication.templates*') ? 'is-active' : '' }}">Templates</a>
                     </div>
                 </div>
             </div>
