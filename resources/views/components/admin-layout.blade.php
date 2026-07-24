@@ -73,6 +73,7 @@
                         <a href="{{ route('admin.daily-words.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.daily-words.*') ? 'is-active' : '' }}">Word of the Day</a>
                         <a href="{{ route('admin.hero-slides.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.hero-slides.*') ? 'is-active' : '' }}">Hero Slider</a>
                         <a href="{{ route('admin.events.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.events.*') ? 'is-active' : '' }}">Live Events</a>
+                        <a href="{{ route('admin.event-registrations.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.event-registrations.*') ? 'is-active' : '' }}">Event Registrations</a>
                         <a href="{{ route('admin.sermons.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.sermons.*') ? 'is-active' : '' }}">Sermons</a>
                         <a href="{{ route('admin.gallery.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.gallery.*') ? 'is-active' : '' }}">Gallery</a>
                         <a href="{{ route('admin.prayer-requests.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.prayer-requests.*') ? 'is-active' : '' }}">Prayer Requests</a>

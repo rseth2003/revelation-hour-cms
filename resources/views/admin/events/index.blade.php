@@ -2,12 +2,20 @@
     <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div>
             <h2 class="text-2xl font-bold text-[#072f68]">Live Events</h2>
-            <p class="mt-1 text-sm text-slate-600">Upload and manage event posters for the public website.</p>
+            <p class="mt-1 text-sm text-slate-600">Upload event posters and manage public registrations.</p>
         </div>
-        <a href="{{ route('admin.events.create') }}"
-           class="rounded-xl bg-lime-500 px-5 py-3 font-bold text-[#072f68] shadow hover:bg-lime-400">
-            + New Event
-        </a>
+
+        <div class="flex flex-wrap gap-2">
+            <a href="{{ route('admin.event-registrations.index') }}"
+               class="rounded-xl border border-blue-200 bg-white px-5 py-3 font-bold text-blue-700 shadow-sm hover:bg-blue-50">
+                Registrations
+            </a>
+
+            <a href="{{ route('admin.events.create') }}"
+               class="rounded-xl bg-lime-500 px-5 py-3 font-bold text-[#072f68] shadow hover:bg-lime-400">
+                + New Event
+            </a>
+        </div>
     </div>
 
     @if(session('success'))
@@ -34,6 +42,7 @@
                     <div class="p-5">
                         <div class="mb-3 flex items-start justify-between gap-3">
                             <h3 class="font-bold text-[#072f68]">{{ $event->title }}</h3>
+
                             <span class="rounded-full px-2.5 py-1 text-xs font-semibold {{ $event->is_published ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-600' }}">
                                 {{ $event->is_published ? 'Published' : 'Draft' }}
                             </span>
@@ -47,15 +56,27 @@
                             <p class="mt-1 text-sm text-slate-500">{{ $event->location }}</p>
                         @endif
 
-                        <div class="mt-5 flex gap-2">
+                        <div class="mt-4 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3">
+                            <p class="text-xs font-bold uppercase tracking-wide text-blue-600">Registrations</p>
+                            <p class="mt-1 text-2xl font-bold text-[#072f68]">{{ $event->registrations()->count() }}</p>
+                        </div>
+
+                        <div class="mt-5 grid grid-cols-2 gap-2">
+                            <a href="{{ route('admin.event-registrations.show', $event) }}"
+                               class="col-span-2 rounded-lg border border-green-200 px-4 py-2 text-center text-sm font-semibold text-green-700 hover:bg-green-50">
+                                Manage Registrations
+                            </a>
+
                             <a href="{{ route('admin.events.edit', $event) }}"
-                               class="flex-1 rounded-lg border border-blue-200 px-4 py-2 text-center text-sm font-semibold text-blue-700 hover:bg-blue-50">
+                               class="rounded-lg border border-blue-200 px-4 py-2 text-center text-sm font-semibold text-blue-700 hover:bg-blue-50">
                                 Edit
                             </a>
-                            <form method="POST" action="{{ route('admin.events.destroy', $event) }}" class="flex-1"
-                                  onsubmit="return confirm('Delete this event permanently?')">
+
+                            <form method="POST" action="{{ route('admin.events.destroy', $event) }}"
+                                  onsubmit="return confirm('Delete this event and all registrations permanently?')">
                                 @csrf
                                 @method('DELETE')
+
                                 <button class="w-full rounded-lg border border-red-200 px-4 py-2 text-sm font-semibold text-red-700 hover:bg-red-50">
                                     Delete
                                 </button>

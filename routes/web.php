@@ -265,3 +265,5 @@ require __DIR__.'/communication.php';
 require __DIR__.'/analytics.php';
 
 require __DIR__.'/attendance.php';
+
+require __DIR__.'/event-registration.php';

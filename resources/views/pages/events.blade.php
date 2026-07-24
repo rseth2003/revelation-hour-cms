@@ -45,6 +45,10 @@
                             @if ($event->description)
                                 <p>{{ $event->description }}</p>
                             @endif
+
+                            <a href="{{ route('event-registration.create', $event) }}" class="btn btn-primary">
+                                Register
+                            </a>
                         </div>
                     </article>
                 @endforeach

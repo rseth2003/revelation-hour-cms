@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 
 class Event extends Model
@@ -27,6 +28,11 @@ class Event extends Model
             'is_published' => 'boolean',
             'sort_order' => 'integer',
         ];
+    }
+
+    public function registrations(): HasMany
+    {
+        return $this->hasMany(EventRegistration::class);
     }
 
     public function getPosterUrlAttribute(): ?string
