@@ -7,7 +7,6 @@ use App\Models\Event;
 use App\Models\EventRegistration;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -82,7 +81,6 @@ class EventRegistrationController extends Controller
         return response()->streamDownload(function () use ($registrations, $event) {
             $handle = fopen('php://output', 'w');
 
-            // UTF-8 BOM for Excel compatibility.
             fwrite($handle, "\xEF\xBB\xBF");
 
             fputcsv($handle, [
@@ -97,7 +95,7 @@ class EventRegistrationController extends Controller
                 'Check-in Time',
                 'Registered At',
                 'Notes',
-            ]);
+            ], ',', '"', '\\');
 
             foreach ($registrations as $registration) {
                 fputcsv($handle, [
@@ -112,7 +110,7 @@ class EventRegistrationController extends Controller
                     $registration->checked_in_at?->format('Y-m-d H:i:s'),
                     $registration->created_at?->format('Y-m-d H:i:s'),
                     $registration->notes,
-                ]);
+                ], ',', '"', '\\');
             }
 
             fclose($handle);
