@@ -66,11 +66,10 @@ Route::get('/', function () {
             ->orderByDesc('publish_date')
             ->first();
 
-    return view('home', compact('events', 'ministries', 'featuredSermon', 'featuredDailyWord', 'heroSlides'));
+    $homepageLivestream = \App\Models\Livestream::query()->where('is_published', true)->where('show_on_homepage', true)->orderByDesc('scheduled_start')->first();
+
+    return view('home', compact('events', 'ministries', 'featuredSermon', 'featuredDailyWord', 'heroSlides', 'homepageLivestream'));
 })->name('home');
-
-Route::view('/about', 'pages.about')->name('about');
-
 
 Route::get('/campuses', function () {
     $campuses = Campus::query()
@@ -165,8 +164,6 @@ Route::get('/word-of-the-day', function () {
     return view('pages.daily-words', compact('featured','words'));
 })->name('daily-words');
 
-Route::view('/plan-your-visit', 'pages.visit')->name('visit');
-Route::view('/give', 'pages.give')->name('give');
 Route::view('/contact', 'pages.contact')->name('contact');
 
 Route::post('/prayer-requests', [PrayerRequestController::class, 'store'])
@@ -258,6 +255,8 @@ Route::middleware('auth')->group(function () {
         ->name('profile.destroy');
 });
 
+require __DIR__.'/giving.php';
+
 require __DIR__.'/auth.php';
 
 require __DIR__.'/communication.php';
@@ -267,3 +266,9 @@ require __DIR__.'/analytics.php';
 require __DIR__.'/attendance.php';
 
 require __DIR__.'/event-registration.php';
+
+require __DIR__.'/elibrary.php';
+
+require __DIR__.'/about-visit-services.php';
+
+require __DIR__.'/livestream.php';

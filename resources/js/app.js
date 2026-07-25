@@ -268,3 +268,6 @@ document.addEventListener('DOMContentLoaded', () => {
     closeButton?.addEventListener('click', closeToast);
     timer = window.setTimeout(closeToast, 7000);
 });
+
+// RHMI Livestream v1.2.0
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('[data-countdown]').forEach(el=>{const target=new Date(el.dataset.countdown).getTime();const tick=()=>{const diff=Math.max(0,target-Date.now());const d=Math.floor(diff/86400000),h=Math.floor(diff%86400000/3600000),m=Math.floor(diff%3600000/60000),s=Math.floor(diff%60000/1000);el.querySelector('[data-days]').textContent=String(d).padStart(2,'0');el.querySelector('[data-hours]').textContent=String(h).padStart(2,'0');el.querySelector('[data-minutes]').textContent=String(m).padStart(2,'0');el.querySelector('[data-seconds]').textContent=String(s).padStart(2,'0')};tick();setInterval(tick,1000)})});

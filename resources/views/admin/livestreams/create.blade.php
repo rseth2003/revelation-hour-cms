@@ -1,0 +1,1 @@
+<x-admin-layout title="Add Livestream" heading="Add Livestream"><div class="rounded-2xl border bg-white p-8"><form method="POST" action="{{ route('admin.livestreams.store') }}" enctype="multipart/form-data">@include('admin.livestreams._form',['buttonText'=>'Create Livestream'])</form></div></x-admin-layout>

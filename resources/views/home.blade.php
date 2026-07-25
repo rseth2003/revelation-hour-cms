@@ -4,6 +4,7 @@
 
 @section('content')
 @include('partials.home-hero-slider')
+@include('partials.home-livestream')
 
 <section class="quick-actions">
     <div class="container quick-grid">

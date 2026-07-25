@@ -1,0 +1,1 @@
+<x-admin-layout title="Edit Library Category" heading="Edit Library Category"><div class="mx-auto max-w-3xl rounded-2xl border bg-white p-8"><form method="POST" action="{{ route('admin.library-categories.update',$libraryCategory) }}">@method('PUT') @include('admin.library-categories._form',['buttonText'=>'Save Changes'])</form></div></x-admin-layout>

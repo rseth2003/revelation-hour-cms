@@ -2,28 +2,4 @@
     $site = $websiteSettings ?? \App\Models\WebsiteSetting::current();
     $siteLogo = $site->logo_url ?: asset('images/revelation-hour-logo.jpg');
 @endphp
-
-<header class="site-header">
-    <nav class="navbar">
-        <div class="container nav-inner">
-            <a class="brand" href="{{ route('home') }}">
-                <img src="{{ $siteLogo }}" alt="{{ $site->church_name }} logo">
-            </a>
-
-            <button class="nav-toggle" type="button" aria-label="Open navigation">☰</button>
-
-            <div class="nav-links">
-                <a href="{{ route('home') }}">Home</a>
-                <a href="{{ route('about') }}">About</a>
-                <a href="{{ route('campuses') }}">Campuses</a>
-                <a href="{{ route('ministries') }}">Ministries</a>
-                <a href="{{ route('events') }}">Events</a>
-                <a href="{{ route('sermons') }}">Sermons</a>
-                <a href="{{ route('gallery') }}">Gallery</a>
-                <a href="{{ route('visit') }}">Plan Your Visit</a>
-                <a href="{{ route('contact') }}">Connect</a>
-                <a class="nav-give" href="{{ route('give') }}">Give</a>
-            </div>
-        </div>
-    </nav>
-</header>
+<header class="site-header"><nav class="navbar"><div class="container nav-inner"><a class="brand" href="{{ route('home') }}"><img src="{{ $siteLogo }}" alt="{{ $site->church_name }} logo"></a><button class="nav-toggle" type="button" aria-label="Open navigation">☰</button><div class="nav-links"><a href="{{ route('home') }}">Home</a><div class="nav-dropdown"><button type="button">About <span>⌄</span></button><div class="nav-dropdown-menu"><a href="{{ route('about') }}#story">Our Story</a><a href="{{ route('about') }}#vision-mission">Vision & Mission</a><a href="{{ route('about') }}#core-values">Core Values</a><a href="{{ route('about') }}#leadership">Leadership</a><a href="{{ route('about.motto') }}">Motto</a></div></div><div class="nav-dropdown"><button type="button">Community <span>⌄</span></button><div class="nav-dropdown-menu"><a href="{{ route('ministries') }}">Ministries</a><a href="{{ route('campuses') }}">Campuses</a>@if(Route::has('ecommunity'))<a href="{{ route('ecommunity') }}">eCommunity</a>@endif</div></div><div class="nav-dropdown"><button type="button">Worship & Media <span>⌄</span></button><div class="nav-dropdown-menu"><a href="{{ route('sermons') }}">Sermons</a><a href="{{ route('daily-words') }}">Word of the Day</a><a href="{{ route('gallery') }}">Gallery</a><a href="{{ route('livestreams.index') }}">Livestream</a></div></div><a href="{{ route('events') }}">Events</a>@if(Route::has('library.index'))<a href="{{ route('library.index') }}">eLibrary</a>@endif<div class="nav-dropdown"><button type="button">Visit & Contact <span>⌄</span></button><div class="nav-dropdown-menu"><a href="{{ route('visit') }}">Plan Your Visit</a><a href="{{ route('service-times') }}">Service Times</a><a href="{{ route('contact') }}">Contact & Prayer</a></div></div><a class="nav-give" href="{{ route('give') }}">Give</a></div></div></nav></header>

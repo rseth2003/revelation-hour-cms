@@ -13,8 +13,10 @@
         'admin.daily-words.*',
         'admin.events.*',
         'admin.sermons.*',
+        'admin.livestreams.*',
         'admin.gallery.*',
-        'admin.prayer-requests.*'
+        'admin.prayer-requests.*',
+        'admin.giving-methods.*'
     );
 
     $churchOpen = request()->routeIs(
@@ -75,8 +77,16 @@
                         <a href="{{ route('admin.events.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.events.*') ? 'is-active' : '' }}">Live Events</a>
                         <a href="{{ route('admin.event-registrations.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.event-registrations.*') ? 'is-active' : '' }}">Event Registrations</a>
                         <a href="{{ route('admin.sermons.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.sermons.*') ? 'is-active' : '' }}">Sermons</a>
+                        <a href="{{ route('admin.library-resources.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.library-resources.*') ? 'is-active' : '' }}">eLibrary</a>
+                        <a href="{{ route('admin.library-categories.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.library-categories.*') ? 'is-active' : '' }}">Library Categories</a>
+                        <a href="{{ route('admin.livestreams.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.livestreams.*') ? 'is-active' : '' }}">Livestreams</a>
                         <a href="{{ route('admin.gallery.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.gallery.*') ? 'is-active' : '' }}">Gallery</a>
                         <a href="{{ route('admin.prayer-requests.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.prayer-requests.*') ? 'is-active' : '' }}">Prayer Requests</a>
+                        @if(auth()->user()->hasRole('super_admin','senior_pastor','admin'))<a href="{{ route('admin.giving-methods.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.giving-methods.*') ? 'is-active' : '' }}">Give & Donations</a>@endif
+                        <a href="{{ route('admin.about-settings.edit') }}" class="admin-nav-sublink {{ request()->routeIs('admin.about-settings.*') ? 'is-active' : '' }}">About, Vision & Motto</a>
+                        <a href="{{ route('admin.core-values.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.core-values.*') ? 'is-active' : '' }}">Core Values</a>
+                        <a href="{{ route('admin.leaders.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.leaders.*') ? 'is-active' : '' }}">Leadership</a>
+                        <a href="{{ route('admin.service-times.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.service-times.*') ? 'is-active' : '' }}">Service Times</a>
                         <a href="{{ route('admin.settings.edit') }}" class="admin-nav-sublink {{ request()->routeIs('admin.settings.*') ? 'is-active' : '' }}">Website Settings</a>
                     </div>
                 </div>

@@ -3,23 +3,38 @@
         <div class="footer-brand">
             <img src="{{ asset('images/revelation-hour-logo.jpg') }}" alt="RHMI logo">
             <p>Revelation Hour Ministries International</p>
-            <small>Word | Worth | Wonder</small>
         </div>
 
         <div>
             <h4>Visit Us</h4>
             <p>Valley Road, Canaansite Estate,<br>Nakwero–Gayaza, Uganda</p>
-            <p><a href="tel:+256774328127">+256 774 328 127</a></p>
-            <p><a href="tel:+256784537003">+256 784 537 003</a></p>
+            <p><a href="{{ route('visit') }}">Plan Your Visit</a></p>
+            <p>
+                <a
+                    href="https://maps.app.goo.gl/4zP4RCdjQYg9PoPn6?g_st=awb"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Open location in Google Maps
+                </a>
+            </p>
+
+            <h5 class="footer-contact-heading">Contact</h5>
+            <div class="footer-contact-numbers">
+                <a href="tel:+256774328127">+256 774 328 127</a>
+                <a href="tel:+256784537003">+256 784 537 003</a>
+            </div>
         </div>
 
         <div>
             <h4>Quick Links</h4>
-            <a href="#about">About Us</a>
-            <a href="#services">Service Times</a>
-            <a href="#ministries">Ministries</a>
-            <a href="#live-events">Events</a>
-            <a href="#sermons">Sermons</a>
+            <a href="{{ route('about') }}">About RHMI</a>
+            <a href="{{ route('service-times') }}">Service Times</a>
+            <a href="{{ route('ministries') }}">Ministries</a>
+            <a href="{{ route('events') }}">Events</a>
+            <a href="{{ route('sermons') }}">Sermons</a>
+            @if(Route::has('library.index'))<a href="{{ route('library.index') }}">eLibrary</a>@endif
+            <a href="{{ route('contact') }}">Contact</a>
         </div>
 
         <div>

@@ -1,0 +1,1 @@
+<x-admin-layout title="Add Library Resource" heading="Add Library Resource"><div class="rounded-2xl border bg-white p-8"><form method="POST" action="{{ route('admin.library-resources.store') }}" enctype="multipart/form-data">@include('admin.library-resources._form',['buttonText'=>'Create Resource'])</form></div></x-admin-layout>

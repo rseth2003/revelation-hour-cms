@@ -1,0 +1,1 @@
+<x-admin-layout title="Edit Library Resource" heading="Edit Library Resource"><div class="rounded-2xl border bg-white p-8"><form method="POST" action="{{ route('admin.library-resources.update',$libraryResource) }}" enctype="multipart/form-data">@method('PUT') @include('admin.library-resources._form',['buttonText'=>'Save Changes'])</form></div></x-admin-layout>

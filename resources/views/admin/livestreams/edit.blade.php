@@ -1,0 +1,1 @@
+<x-admin-layout title="Edit Livestream" heading="Edit Livestream"><div class="rounded-2xl border bg-white p-8"><form method="POST" action="{{ route('admin.livestreams.update',$livestream) }}" enctype="multipart/form-data">@method('PUT') @include('admin.livestreams._form',['buttonText'=>'Save Changes'])</form></div></x-admin-layout>

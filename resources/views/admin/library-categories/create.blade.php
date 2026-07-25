@@ -1,0 +1,1 @@
+<x-admin-layout title="Add Library Category" heading="Add Library Category"><div class="mx-auto max-w-3xl rounded-2xl border bg-white p-8"><form method="POST" action="{{ route('admin.library-categories.store') }}">@include('admin.library-categories._form',['buttonText'=>'Create Category'])</form></div></x-admin-layout>
