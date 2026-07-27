@@ -8,13 +8,13 @@ Route::get('/events/{event}/register', [EventRegistrationController::class, 'cre
     ->name('event-registration.create');
 
 Route::post('/events/{event}/register', [EventRegistrationController::class, 'store'])
-    ->middleware('throttle:8,1')
+    ->middleware('throttle:public-forms')
     ->name('event-registration.store');
 
 Route::get(
     '/events/{event}/registration/{registration}/success',
     [EventRegistrationController::class, 'success']
-)->name('event-registration.success');
+)->middleware('signed')->name('event-registration.success');
 
 Route::middleware(['auth'])
     ->prefix('admin')

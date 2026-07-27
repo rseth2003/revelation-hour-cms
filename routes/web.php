@@ -23,28 +23,29 @@ use App\Models\HeroSlide;
 use App\Models\Ministry;
 use App\Models\Sermon;
 use Illuminate\Support\Facades\Route;
+use App\Services\PublicContentCache;
 
 Route::get('/', function () {
-    $heroSlides = HeroSlide::query()
+    $heroSlides = PublicContentCache::remember('home:hero-slides', fn () => HeroSlide::query()
         ->where('is_published', true)
         ->orderBy('sort_order')
         ->orderByDesc('created_at')
-        ->get();
+        ->get());
 
 
-    $ministries = Ministry::query()
+    $ministries = PublicContentCache::remember('home:ministries', fn () => Ministry::query()
         ->where('is_published', true)
         ->orderBy('sort_order')
         ->orderBy('name')
         ->limit(6)
-        ->get();
+        ->get());
 
-    $events = Event::query()
+    $events = PublicContentCache::remember('home:events', fn () => Event::query()
         ->where('is_published', true)
         ->orderBy('sort_order')
         ->orderByDesc('event_date')
         ->limit(12)
-        ->get();
+        ->get());
 
     $featuredSermon = Sermon::query()
         ->where('is_published', true)
@@ -91,11 +92,11 @@ Route::get('/campuses/{campus:slug}', function (Campus $campus) {
 
 
 Route::get('/ministries', function () {
-    $ministries = Ministry::query()
+    $ministries = PublicContentCache::remember('ministries:index', fn () => Ministry::query()
         ->where('is_published', true)
         ->orderBy('sort_order')
         ->orderBy('name')
-        ->get();
+        ->get());
 
     return view('pages.ministries', compact('ministries'));
 })->name('ministries');
@@ -107,11 +108,11 @@ Route::get('/ministries/{ministry:slug}', function (Ministry $ministry) {
 })->name('ministries.show');
 
 Route::get('/events', function () {
-    $events = Event::query()
+    $events = PublicContentCache::remember('events:index', fn () => Event::query()
         ->where('is_published', true)
         ->orderBy('sort_order')
         ->orderByDesc('event_date')
-        ->get();
+        ->get());
 
     return view('pages.events', compact('events'));
 })->name('events');
@@ -165,9 +166,12 @@ Route::get('/word-of-the-day', function () {
 })->name('daily-words');
 
 Route::view('/contact', 'pages.contact')->name('contact');
+Route::view('/privacy', 'pages.privacy')->name('privacy');
+Route::view('/terms', 'pages.terms')->name('terms');
+Route::view('/cookies', 'pages.cookies')->name('cookies');
 
 Route::post('/prayer-requests', [PrayerRequestController::class, 'store'])
-    ->middleware('throttle:10,1')
+    ->middleware('throttle:public-forms')
     ->name('prayer-requests.store');
 
 Route::view('/admin', 'dashboard')

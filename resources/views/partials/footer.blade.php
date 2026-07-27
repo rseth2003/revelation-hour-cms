@@ -66,6 +66,9 @@
     </div>
 
     <div class="footer-bottom">
-        © {{ date('Y') }} Revelation Hour Ministries International. All rights reserved.
+        © {{ date('Y') }} Revelation Hour Ministries International. All rights reserved.<br>
+        <a href="{{ route('privacy') }}">Privacy</a> &nbsp;·&nbsp;
+        <a href="{{ route('terms') }}">Terms</a> &nbsp;·&nbsp;
+        <a href="{{ route('cookies') }}">Cookies</a>
     </div>
 </footer>

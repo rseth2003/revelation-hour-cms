@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\URL;
 
 class EventRegistrationController extends Controller
 {
@@ -64,10 +65,11 @@ class EventRegistrationController extends Controller
             throw $exception;
         }
 
-        return redirect()->route('event-registration.success', [
-            'event' => $event,
-            'registration' => $registration,
-        ]);
+        return redirect(URL::temporarySignedRoute(
+            'event-registration.success',
+            now()->addMinutes(30),
+            ['event' => $event, 'registration' => $registration]
+        ));
     }
 
     public function success(Event $event, EventRegistration $registration): View

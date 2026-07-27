@@ -1,58 +1,114 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Revelation Hour Ministries International CMS
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This repository contains the public website and content management system for Revelation Hour Ministries International. It was built as a practical Laravel application for managing church content, people, events and communication from one place.
 
-## About Laravel
+## What the system includes
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The public website includes the homepage, About pages, leadership, ministries, campuses, service times, events, event registration, sermons, Word of the Day, gallery, livestreams, eLibrary, giving information, contact and prayer requests.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The administration area includes user roles, member records, attendance, event registrations, communication tools, website settings, analytics, media management, livestream management, library resources and giving methods.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The system also includes:
 
-## Learning Laravel
+* Role-based administration
+* CSRF protection and escaped Blade output
+* Login and form rate limiting
+* Secure response headers
+* Optional HTTPS enforcement and HSTS
+* Validated file uploads
+* Signed event-registration confirmation links
+* Cache invalidation when public content changes
+* Database or Redis cache, session and queue support
+* PWA installation assets
+* Deployment and maintenance documentation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Technical requirements
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* PHP 8.3 or newer
+* Composer 2
+* Node.js 20 or newer
+* MySQL 8, MariaDB 10.6+, PostgreSQL or SQLite
+* Nginx or Apache for production
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+Redis is optional. The website works with database-backed cache, sessions and queues when Redis is unavailable.
 
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Quick local setup
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+cp .env.example .env
+composer install
+php artisan key:generate
+php artisan migrate
+npm install
+npm run build
+php artisan storage:link
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+For active development, use:
 
-## Contributing
+```bash
+composer run dev
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## First production deployment
 
-## Code of Conduct
+Read [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) before publishing the website. The basic production sequence is:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+composer install --no-dev --optimize-autoloader
+npm ci
+npm run build
+php artisan migrate --force
+php artisan storage:link
+php artisan optimize
+php artisan rhmi:check
+```
 
-## Security Vulnerabilities
+The web server document root must point to the project's `public` directory. Never point a domain at the project root.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Documentation
 
-## License
+* [Deployment guide](docs/DEPLOYMENT.md)
+* [Security guide](docs/SECURITY.md)
+* [Caching and Redis](docs/CACHE_AND_REDIS.md)
+* [Backups and recovery](docs/BACKUPS.md)
+* [Operations and updates](docs/OPERATIONS.md)
+* [System overview](SYSTEM.md)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Safe repository rules
+
+Do not commit `.env`, database dumps, private keys, uploaded member records or production backups. The included `.env.production.example` contains placeholders only.
+
+## Branch workflow
+
+The active project branch is `cms-dashboard`.
+
+```bash
+git checkout cms-dashboard
+git pull origin cms-dashboard
+```
+
+After testing a change:
+
+```bash
+git add .
+git commit -m "Describe the completed change"
+git push origin cms-dashboard
+```
+
+## Legal and privacy note
+
+The project contains practical Privacy, Terms and Cookie pages, but they are starting documents rather than legal advice. Before launch, RHMI should confirm that the wording matches its real data collection, communication, donation and record-retention practices.
+
+## Project ownership
+
+Built for Revelation Hour Ministries International.
+
+## CMS roles and module access
+
+The Super Admin controls both a user's role and the CMS modules that user may open. During account creation or editing, the Super Admin can select all modules or choose only the required areas. For example, a Senior Usher can be limited to Members and Attendance. Permissions are checked on the server, not only hidden in the sidebar.
+
+## Security headers during development
+
+Security headers remain enabled because they protect the production website. The local policy separately allows the Vite development server on localhost, so `composer run dev` can load CSS and JavaScript normally. Production keeps the stricter policy.

@@ -4,6 +4,8 @@ use Illuminate\Support\Str;
 
 return [
 
+    'public_ttl' => (int) env('PUBLIC_CACHE_TTL', 300),
+
     /*
     |--------------------------------------------------------------------------
     | Default Cache Store

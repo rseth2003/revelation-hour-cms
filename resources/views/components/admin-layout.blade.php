@@ -35,6 +35,7 @@
     );
 
     $administrationOpen = request()->routeIs('admin.users.*');
+    $cmsUser = auth()->user();
 @endphp
 
 <div class="min-h-screen lg:flex">
@@ -80,22 +81,22 @@
 
                 <div class="admin-nav-submenu {{ $websiteOpen ? 'is-open' : '' }}" data-sidebar-submenu>
                     <div class="admin-nav-submenu-inner">
-                        <a href="{{ route('admin.daily-words.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.daily-words.*') ? 'is-active' : '' }}">Word of the Day</a>
-                        <a href="{{ route('admin.hero-slides.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.hero-slides.*') ? 'is-active' : '' }}">Hero Slider</a>
-                        <a href="{{ route('admin.events.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.events.*') ? 'is-active' : '' }}">Live Events</a>
-                        <a href="{{ route('admin.event-registrations.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.event-registrations.*') ? 'is-active' : '' }}">Event Registrations</a>
-                        <a href="{{ route('admin.sermons.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.sermons.*') ? 'is-active' : '' }}">Sermons</a>
-                        <a href="{{ route('admin.library-resources.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.library-resources.*') ? 'is-active' : '' }}">eLibrary</a>
-                        <a href="{{ route('admin.library-categories.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.library-categories.*') ? 'is-active' : '' }}">Library Categories</a>
-                        <a href="{{ route('admin.livestreams.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.livestreams.*') ? 'is-active' : '' }}">Livestreams</a>
-                        <a href="{{ route('admin.gallery.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.gallery.*') ? 'is-active' : '' }}">Gallery</a>
-                        <a href="{{ route('admin.prayer-requests.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.prayer-requests.*') ? 'is-active' : '' }}">Prayer Requests</a>
-                        @if(auth()->user()->hasRole('super_admin','senior_pastor','admin'))<a href="{{ route('admin.giving-methods.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.giving-methods.*') ? 'is-active' : '' }}">Give & Donations</a>@endif
-                        <a href="{{ route('admin.about-settings.edit') }}" class="admin-nav-sublink {{ request()->routeIs('admin.about-settings.*') ? 'is-active' : '' }}">About, Vision & Motto</a>
-                        <a href="{{ route('admin.core-values.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.core-values.*') ? 'is-active' : '' }}">Core Values</a>
-                        <a href="{{ route('admin.leaders.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.leaders.*') ? 'is-active' : '' }}">Leadership</a>
-                        <a href="{{ route('admin.service-times.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.service-times.*') ? 'is-active' : '' }}">Service Times</a>
-                        <a href="{{ route('admin.settings.edit') }}" class="admin-nav-sublink {{ request()->routeIs('admin.settings.*') ? 'is-active' : '' }}">Website Settings</a>
+                        @if($cmsUser->canAccessModule('media'))<a href="{{ route('admin.daily-words.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.daily-words.*') ? 'is-active' : '' }}">Word of the Day</a>@endif
+                        @if($cmsUser->canAccessModule('media'))<a href="{{ route('admin.hero-slides.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.hero-slides.*') ? 'is-active' : '' }}">Hero Slider</a>@endif
+                        @if($cmsUser->canAccessModule('events'))<a href="{{ route('admin.events.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.events.*') ? 'is-active' : '' }}">Live Events</a>@endif
+                        @if($cmsUser->canAccessModule('events'))<a href="{{ route('admin.event-registrations.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.event-registrations.*') ? 'is-active' : '' }}">Event Registrations</a>@endif
+                        @if($cmsUser->canAccessModule('media'))<a href="{{ route('admin.sermons.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.sermons.*') ? 'is-active' : '' }}">Sermons</a>@endif
+                        @if($cmsUser->canAccessModule('library'))<a href="{{ route('admin.library-resources.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.library-resources.*') ? 'is-active' : '' }}">eLibrary</a>@endif
+                        @if($cmsUser->canAccessModule('library'))<a href="{{ route('admin.library-categories.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.library-categories.*') ? 'is-active' : '' }}">Library Categories</a>@endif
+                        @if($cmsUser->canAccessModule('media'))<a href="{{ route('admin.livestreams.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.livestreams.*') ? 'is-active' : '' }}">Livestreams</a>@endif
+                        @if($cmsUser->canAccessModule('media'))<a href="{{ route('admin.gallery.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.gallery.*') ? 'is-active' : '' }}">Gallery</a>@endif
+                        @if($cmsUser->canAccessModule('prayer'))<a href="{{ route('admin.prayer-requests.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.prayer-requests.*') ? 'is-active' : '' }}">Prayer Requests</a>@endif
+                        @if($cmsUser->canAccessModule('giving'))<a href="{{ route('admin.giving-methods.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.giving-methods.*') ? 'is-active' : '' }}">Give & Donations</a>@endif
+                        @if($cmsUser->canAccessModule('website'))<a href="{{ route('admin.about-settings.edit') }}" class="admin-nav-sublink {{ request()->routeIs('admin.about-settings.*') ? 'is-active' : '' }}">About, Vision & Motto</a>@endif
+                        @if($cmsUser->canAccessModule('website'))<a href="{{ route('admin.core-values.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.core-values.*') ? 'is-active' : '' }}">Core Values</a>@endif
+                        @if($cmsUser->canAccessModule('church_structure'))<a href="{{ route('admin.leaders.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.leaders.*') ? 'is-active' : '' }}">Leadership</a>@endif
+                        @if($cmsUser->canAccessModule('website'))<a href="{{ route('admin.service-times.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.service-times.*') ? 'is-active' : '' }}">Service Times</a>@endif
+                        @if($cmsUser->canAccessModule('website'))<a href="{{ route('admin.settings.edit') }}" class="admin-nav-sublink {{ request()->routeIs('admin.settings.*') ? 'is-active' : '' }}">Website Settings</a>@endif
                     </div>
                 </div>
             </div>
@@ -116,18 +117,18 @@
 
                 <div class="admin-nav-submenu {{ $churchOpen ? 'is-open' : '' }}" data-sidebar-submenu>
                     <div class="admin-nav-submenu-inner">
-                        <a href="{{ route('admin.campuses.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.campuses.*') ? 'is-active' : '' }}">Campuses</a>
-                        <a href="{{ route('admin.ministries.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.ministries.*') ? 'is-active' : '' }}">Ministries</a>
-                        <a href="{{ route('admin.members.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.members.*') ? 'is-active' : '' }}">Members</a>
+                        @if($cmsUser->canAccessModule('church_structure'))<a href="{{ route('admin.campuses.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.campuses.*') ? 'is-active' : '' }}">Campuses</a>@endif
+                        @if($cmsUser->canAccessModule('church_structure'))<a href="{{ route('admin.ministries.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.ministries.*') ? 'is-active' : '' }}">Ministries</a>@endif
+                        @if($cmsUser->canAccessModule('membership'))<a href="{{ route('admin.members.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.members.*') ? 'is-active' : '' }}">Members</a>@endif
 
-                        @if(auth()->user()->hasRole('super_admin','senior_pastor','campus_pastor','admin','senior_usher','membership_officer'))
+                        @if($cmsUser->canAccessModule('attendance'))
                             <a href="{{ route('admin.attendance.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.attendance.*') ? 'is-active' : '' }}">Attendance</a>
                         @endif
                     </div>
                 </div>
             </div>
 
-            @if(auth()->user()->hasRole('super_admin','senior_pastor','admin'))
+            @if(auth()->user()->role === 'super_admin')
                 <div class="admin-nav-group" data-sidebar-group>
                     <button
                         type="button"
@@ -169,6 +170,7 @@
                 </div>
             </div>
 
+            @if($cmsUser->canAccessModule('communication'))
             <div class="admin-nav-group" data-sidebar-group>
                 <button type="button" class="admin-nav-group-button" data-sidebar-group-button aria-expanded="false">
                     <span class="flex min-w-0 items-center gap-3">
@@ -187,6 +189,9 @@
                 </div>
             </div>
 
+            @endif
+
+            @if($cmsUser->canAccessModule('website'))
             <div class="admin-nav-group" data-sidebar-group>
                 <button type="button" class="admin-nav-group-button" data-sidebar-group-button aria-expanded="false">
                     <span class="flex min-w-0 items-center gap-3">
@@ -198,10 +203,11 @@
 
                 <div class="admin-nav-submenu" data-sidebar-submenu>
                     <div class="admin-nav-submenu-inner">
-                        <a href="{{ route('admin.settings.edit') }}" class="admin-nav-sublink {{ request()->routeIs('admin.settings.*') ? 'is-active' : '' }}">Website Settings</a>
+                        @if($cmsUser->canAccessModule('website'))<a href="{{ route('admin.settings.edit') }}" class="admin-nav-sublink {{ request()->routeIs('admin.settings.*') ? 'is-active' : '' }}">Website Settings</a>@endif
                     </div>
                 </div>
             </div>
+            @endif
         </nav>
 
         <div class="shrink-0 border-t border-white/10 bg-[#1f2775] p-3">
