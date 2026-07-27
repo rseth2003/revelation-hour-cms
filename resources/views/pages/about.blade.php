@@ -77,7 +77,7 @@
                 </article>
             @empty
                 <div class="empty-state">
-                    Core values will appear after they are added through the CMS.
+                    Core values will be published here once approved by the ministry.
                 </div>
             @endforelse
         </div>
@@ -147,7 +147,7 @@
                 </article>
             @empty
                 <div class="empty-state">
-                    Leadership profiles will appear after they are added through the CMS.
+                    Leadership profiles will be published here once approved.
                 </div>
             @endforelse
         </div>

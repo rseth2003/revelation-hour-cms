@@ -18,7 +18,7 @@ class GivingMethod extends Model
     ];
 
     protected $fillable = [
-        'title', 'provider', 'account_name', 'account_number', 'bank_name',
+        'title', 'provider', 'icon_path', 'account_name', 'account_number', 'bank_name',
         'branch_name', 'swift_code', 'instructions', 'button_label', 'button_url',
         'is_featured', 'is_published', 'sort_order',
     ];

@@ -23,21 +23,21 @@
                 <article class="giving-card giving-card--{{ $method->provider }} {{ $method->is_featured ? 'is-featured' : '' }}">
                     @if($method->is_featured)<span class="giving-featured">Recommended</span>@endif
                     <div class="giving-brand">
-                        @if($method->provider === 'mtn_momo')
+                        @if($method->icon_path)
+                            <span class="giving-uploaded-logo"><img src="{{ asset('storage/'.$method->icon_path) }}" alt="{{ $method->title }} logo"></span>
+                        @elseif($method->provider === 'mtn_momo')
                             <span class="giving-logo giving-logo-mtn"><span>MTN</span></span>
-                            <strong>Mobile Money</strong>
                         @elseif($method->provider === 'airtel_money')
                             <span class="giving-logo giving-logo-airtel">airtel</span>
-                            <strong>Airtel Money</strong>
                         @elseif($method->provider === 'cards')
                             <span class="giving-card-logos" aria-label="Visa and Mastercard">
                                 <span class="giving-visa">VISA</span>
                                 <span class="giving-mastercard"><i></i><i></i></span>
                             </span>
-                            <strong>Cards</strong>
                         @else
-                            <span class="giving-logo giving-logo-other">♡</span><strong>{{ $method->provider_label }}</strong>
+                            <span class="giving-logo giving-logo-other">{{ mb_substr($method->title, 0, 1) }}</span>
                         @endif
+                        <strong>{{ $method->title }}</strong>
                     </div>
                     <h3>{{ $method->title }}</h3>
                     <div class="giving-details">

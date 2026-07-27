@@ -1,0 +1,173 @@
+/* RHMI public pages production polish v1.4.1 */
+:root {
+    --rhmi-ink: #172019;
+    --rhmi-muted: #647067;
+    --rhmi-line: #e3e9e4;
+    --rhmi-soft: #f5f8f5;
+    --rhmi-card-radius: 22px;
+    --rhmi-shadow: 0 18px 50px rgba(18, 48, 29, .09);
+}
+
+.page-hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(88px, 10vw, 138px) 0 clamp(68px, 8vw, 105px);
+    background: linear-gradient(135deg, #0f2a1b 0%, #18452b 58%, #23663c 100%);
+    color: #fff;
+}
+.page-hero::after {
+    content: "";
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    right: -120px;
+    bottom: -190px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.18);
+    box-shadow: 0 0 0 50px rgba(255,255,255,.035), 0 0 0 100px rgba(255,255,255,.025);
+}
+.page-hero .container { position: relative; z-index: 1; max-width: 920px; }
+.page-hero h1 { max-width: 820px; margin: 10px 0 16px; font-size: clamp(2.45rem, 6vw, 4.8rem); line-height: .98; letter-spacing: -.045em; }
+.page-hero p:last-child { max-width: 720px; margin: 0; color: rgba(255,255,255,.82); font-size: clamp(1rem, 2vw, 1.18rem); line-height: 1.75; }
+.page-hero .eyebrow { color: #bfe5c9; }
+
+.section { padding: clamp(68px, 8vw, 108px) 0; }
+.section-soft { background: var(--rhmi-soft); }
+.section-heading { max-width: 720px; margin: 0 auto clamp(32px, 5vw, 54px); }
+.section-title-left { margin-bottom: 18px; }
+.empty-state { border: 1px dashed #cbd7ce; border-radius: 20px; padding: 34px; background: #fff; color: var(--rhmi-muted); text-align: center; }
+
+.public-events-grid,
+.public-sermon-grid,
+.public-gallery-grid,
+.daily-word-grid,
+.library-grid,
+.broadcast-grid,
+.service-schedule-grid,
+.visit-expect-grid {
+    gap: clamp(20px, 3vw, 30px);
+}
+
+.public-event-card,
+.public-sermon-card,
+.public-gallery-card,
+.daily-word-card,
+.library-card,
+.broadcast-card,
+.service-schedule-card,
+.visit-expect-grid article,
+.contact-card-list article,
+.public-form {
+    border: 1px solid var(--rhmi-line);
+    border-radius: var(--rhmi-card-radius);
+    background: #fff;
+    box-shadow: 0 10px 34px rgba(18, 48, 29, .055);
+}
+.public-event-card,
+.public-sermon-card,
+.public-gallery-card,
+.daily-word-card,
+.library-card,
+.broadcast-card { overflow: hidden; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.public-event-card:hover,
+.public-sermon-card:hover,
+.public-gallery-card:hover,
+.daily-word-card:hover,
+.library-card:hover,
+.broadcast-card:hover { transform: translateY(-5px); border-color: #c7d8cb; box-shadow: var(--rhmi-shadow); }
+.public-event-card > img,
+.public-sermon-card > img,
+.public-gallery-card > img,
+.daily-word-card > img,
+.library-card > img,
+.broadcast-card > img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.public-event-copy,
+.public-sermon-copy,
+.public-gallery-copy,
+.daily-word-copy { padding: 25px; }
+.public-event-copy h2,
+.public-sermon-copy h2,
+.public-gallery-copy h2,
+.daily-word-copy h2 { margin: 8px 0 12px; font-size: 1.32rem; line-height: 1.25; }
+.event-date { color: #2f6f44; font-weight: 800; letter-spacing: .02em; }
+
+.sermon-public-feature,
+.daily-word-feature,
+.upcoming-feature,
+.visit-location-grid,
+.contact-page-grid {
+    gap: clamp(34px, 6vw, 72px);
+    align-items: center;
+}
+.sermon-public-media,
+.daily-word-feature > div:first-child,
+.upcoming-feature > img,
+.visit-map-frame { border-radius: 26px; overflow: hidden; box-shadow: var(--rhmi-shadow); }
+.sermon-public-media iframe,
+.sermon-public-media img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.daily-word-poster { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.daily-word-feature blockquote { margin: 24px 0; padding: 20px 24px; border-left: 4px solid #2f6f44; background: var(--rhmi-soft); border-radius: 0 16px 16px 0; font-size: 1.08rem; line-height: 1.8; }
+
+.library-filter,
+.livestream-search { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(170px, .8fr) minmax(170px, .8fr) auto; gap: 12px; margin-bottom: 36px; padding: 18px; border: 1px solid var(--rhmi-line); border-radius: 20px; background: #fff; }
+.livestream-search { grid-template-columns: minmax(0, 1fr) auto; max-width: 680px; margin-inline: auto; }
+.library-filter input,
+.library-filter select,
+.livestream-search input,
+.public-form input,
+.public-form select,
+.public-form textarea { width: 100%; border: 1px solid #cfd9d1; border-radius: 13px; background: #fff; padding: 13px 15px; transition: border-color .2s ease, box-shadow .2s ease; }
+.library-filter input:focus,
+.library-filter select:focus,
+.livestream-search input:focus,
+.public-form input:focus,
+.public-form select:focus,
+.public-form textarea:focus { outline: none; border-color: #2f6f44; box-shadow: 0 0 0 4px rgba(47,111,68,.12); }
+
+.service-schedule-card { position: relative; padding: 28px; }
+.service-schedule-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: #2f6f44; border-radius: 22px 0 0 22px; }
+.service-day { color: #2f6f44; font-weight: 900; text-transform: uppercase; letter-spacing: .12em; font-size: .76rem; }
+.service-time-range { font-size: 1.05rem; font-weight: 800; color: var(--rhmi-ink); }
+
+.visit-actions,
+.sermon-actions,
+.center-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.visit-expect-grid article { padding: 28px; }
+.visit-expect-grid article h3 { margin-top: 0; }
+.visit-map-frame iframe { display: block; width: 100%; min-height: 390px; border: 0; }
+
+.contact-card-list { display: grid; gap: 16px; margin-top: 26px; }
+.contact-card-list article { padding: 24px; }
+.contact-card-list strong { display: block; margin-bottom: 7px; color: #2f6f44; }
+.public-form { padding: clamp(24px, 4vw, 38px); }
+.public-form > h2 { margin-top: 0; }
+.public-form label { display: grid; gap: 8px; margin-bottom: 18px; font-weight: 700; }
+.public-checkbox { grid-template-columns: auto 1fr !important; align-items: start; font-weight: 500 !important; }
+.public-checkbox input { width: auto; margin-top: 4px; }
+
+.footer { margin-top: 0; }
+.footer-grid { gap: clamp(32px, 5vw, 64px); }
+.footer-brand img { width: 88px; height: 88px; object-fit: cover; border-radius: 18px; }
+.footer a { transition: opacity .2s ease, transform .2s ease; }
+.footer a:hover { opacity: .82; }
+
+@media (max-width: 920px) {
+    .library-filter { grid-template-columns: 1fr 1fr; }
+    .library-filter input { grid-column: 1 / -1; }
+}
+@media (max-width: 720px) {
+    .page-hero { padding-top: 78px; }
+    .page-hero h1 { font-size: clamp(2.25rem, 12vw, 3.5rem); }
+    .library-filter,
+    .livestream-search { grid-template-columns: 1fr; }
+    .library-filter input { grid-column: auto; }
+    .library-filter .btn,
+    .livestream-search .btn,
+    .visit-actions .btn,
+    .sermon-actions .btn { width: 100%; text-align: center; }
+    .public-event-copy,
+    .public-sermon-copy,
+    .public-gallery-copy,
+    .daily-word-copy { padding: 21px; }
+    .public-form-two { grid-template-columns: 1fr; }
+}

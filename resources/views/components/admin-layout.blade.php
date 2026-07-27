@@ -11,12 +11,20 @@
 @php
     $websiteOpen = request()->routeIs(
         'admin.daily-words.*',
+        'admin.hero-slides.*',
         'admin.events.*',
         'admin.sermons.*',
+        'admin.library-resources.*',
+        'admin.library-categories.*',
         'admin.livestreams.*',
         'admin.gallery.*',
         'admin.prayer-requests.*',
-        'admin.giving-methods.*'
+        'admin.giving-methods.*',
+        'admin.about-settings.*',
+        'admin.core-values.*',
+        'admin.leaders.*',
+        'admin.service-times.*',
+        'admin.settings.*'
     );
 
     $churchOpen = request()->routeIs(
@@ -65,7 +73,7 @@
                 >
                     <span class="flex min-w-0 items-center gap-3">
                         <span class="admin-nav-icon">🌐</span>
-                        <span>Website</span>
+                        <span>Website &amp; Media</span>
                     </span>
                     <span class="admin-nav-chevron">⌄</span>
                 </button>
@@ -137,8 +145,6 @@
                     <div class="admin-nav-submenu {{ $administrationOpen ? 'is-open' : '' }}" data-sidebar-submenu>
                         <div class="admin-nav-submenu-inner">
                             <a href="{{ route('admin.users.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}">Users and Roles</a>
-                            <a href="#" class="admin-nav-sublink opacity-70">Backups</a>
-                            <a href="#" class="admin-nav-sublink opacity-70">System Logs</a>
                         </div>
                     </div>
                 </div>
@@ -193,7 +199,6 @@
                 <div class="admin-nav-submenu" data-sidebar-submenu>
                     <div class="admin-nav-submenu-inner">
                         <a href="{{ route('admin.settings.edit') }}" class="admin-nav-sublink {{ request()->routeIs('admin.settings.*') ? 'is-active' : '' }}">Website Settings</a>
-                        <a href="#" class="admin-nav-sublink opacity-70">General Settings</a>
                     </div>
                 </div>
             </div>
@@ -206,7 +211,7 @@
                 class="flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-sm font-semibold transition hover:bg-white/10"
             >
                 <span>🌍</span>
-                <span>View Public Website</span>
+                <span>Open Public Website</span>
             </a>
         </div>
     </aside>
@@ -214,7 +219,7 @@
     <div id="adminSidebarOverlay" class="fixed inset-0 z-40 hidden bg-slate-950/50 lg:hidden"></div>
 
     <div class="min-w-0 flex-1">
-        <header class="sticky top-0 z-30 flex h-20 items-center justify-between border-b bg-white px-4 shadow-sm sm:px-6">
+        <header class="admin-topbar sticky top-0 z-30 flex min-h-20 items-center justify-between border-b bg-white px-4 py-3 shadow-sm sm:px-6">
             <div class="flex items-center gap-3">
                 <button
                     id="sidebarToggle"
@@ -248,7 +253,7 @@
             </div>
         </header>
 
-        <main class="p-4 sm:p-6 lg:p-8">
+        <main class="admin-main p-4 sm:p-6 lg:p-8">
             {{ $slot }}
         </main>
     </div>

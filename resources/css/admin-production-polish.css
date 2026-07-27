@@ -1,0 +1,81 @@
+/* RHMI CMS production polish v1.4.2 */
+:root {
+    --rhmi-navy: #14206f;
+    --rhmi-blue: #083b78;
+    --rhmi-lime: #72c936;
+    --rhmi-surface: #ffffff;
+    --rhmi-border: #dfe7f1;
+    --rhmi-muted: #617085;
+}
+
+.admin-main { max-width: 1680px; width: 100%; margin-inline: auto; }
+.admin-topbar { backdrop-filter: blur(14px); background: rgba(255,255,255,.95); }
+.admin-sidebar { background: linear-gradient(180deg, #1d2675 0%, #111958 100%); }
+.admin-sidebar-scroll { padding-top: .75rem; padding-bottom: 1rem; }
+.admin-nav-link,.admin-nav-group-button { min-height: 46px; }
+.admin-nav-sublink { line-height: 1.35; }
+
+.admin-welcome-panel {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    gap: 2rem;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    border-radius: 1.5rem;
+    padding: clamp(1.5rem,4vw,2.5rem);
+    color: #fff;
+    background: linear-gradient(120deg,#082f68 0%,#174d91 62%,#1c2673 100%);
+    box-shadow: 0 22px 55px rgba(8,47,104,.18);
+}
+.admin-welcome-panel::after {
+    content:""; position:absolute; width:260px; height:260px; border-radius:999px;
+    right:-90px; top:-120px; background:rgba(114,201,54,.18);
+}
+.admin-welcome-panel h2 { margin-top:.45rem; font-size:clamp(1.65rem,3vw,2.45rem); font-weight:800; letter-spacing:-.03em; }
+.admin-welcome-panel p:not(.admin-eyebrow) { margin-top:.75rem; max-width:48rem; color:#dbeafe; line-height:1.75; }
+.admin-eyebrow { font-size:.72rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:#8ee34b; }
+.admin-role-card { position:relative; z-index:1; min-width:210px; border:1px solid rgba(255,255,255,.16); border-radius:1rem; padding:1rem 1.1rem; background:rgba(255,255,255,.10); backdrop-filter:blur(10px); }
+.admin-role-card span { display:block; color:#bfdbfe; font-size:.72rem; text-transform:uppercase; letter-spacing:.12em; }
+.admin-role-card strong { display:block; margin-top:.35rem; font-size:1rem; }
+.admin-role-card a { display:inline-block; margin-top:.85rem; color:#fff; font-size:.83rem; font-weight:800; }
+
+.admin-section-heading { display:flex; justify-content:space-between; align-items:end; gap:1rem; margin:2.3rem 0 1rem; }
+.admin-section-heading-spaced { margin-top:3rem; }
+.admin-section-heading h2 { margin-top:.25rem; color:var(--rhmi-blue); font-size:1.35rem; font-weight:800; letter-spacing:-.02em; }
+.admin-section-heading p:not(.admin-eyebrow) { margin-top:.3rem; color:var(--rhmi-muted); font-size:.92rem; }
+
+.admin-module-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1rem; }
+.admin-module-card { position:relative; min-height:220px; padding:1.25rem; border:1px solid var(--rhmi-border); border-radius:1.15rem; background:#fff; box-shadow:0 8px 25px rgba(15,23,42,.045); transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease; }
+.admin-module-card:hover { transform:translateY(-3px); border-color:#b9c9dc; box-shadow:0 18px 38px rgba(15,23,42,.10); }
+.admin-module-icon { display:grid; place-items:center; width:44px; height:44px; border-radius:.85rem; font-size:1.15rem; font-weight:800; background:#eef4fb; color:var(--rhmi-blue); }
+.admin-module-status { position:absolute; top:1.25rem; right:1.25rem; border-radius:999px; padding:.3rem .65rem; background:#ecfdf3; color:#18794e; font-size:.69rem; font-weight:800; }
+.admin-module-card h3 { margin-top:1.15rem; color:#102f5d; font-size:1.03rem; font-weight:800; }
+.admin-module-card p { margin-top:.45rem; color:var(--rhmi-muted); font-size:.84rem; line-height:1.6; }
+.admin-module-action { position:absolute; left:1.25rem; bottom:1.15rem; color:#174d91; font-size:.82rem; font-weight:800; }
+.admin-tone-lime .admin-module-icon{background:#effbe5;color:#4d8c1f}.admin-tone-red .admin-module-icon{background:#fff0f0;color:#c93b3b}.admin-tone-violet .admin-module-icon{background:#f3efff;color:#6844c6}.admin-tone-amber .admin-module-icon{background:#fff8df;color:#a16b00}.admin-tone-indigo .admin-module-icon{background:#eef0ff;color:#4d55b8}.admin-tone-emerald .admin-module-icon{background:#e9fbf5;color:#17805c}.admin-tone-slate .admin-module-icon{background:#eef2f6;color:#485569}
+
+.admin-dashboard-widgets { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+.admin-dashboard-widgets > * { margin:0 !important; min-width:0; }
+
+/* Consistent legacy admin cards, tables and forms */
+.admin-main article.rounded-2xl,
+.admin-main section.rounded-2xl,
+.admin-main .rounded-2xl.bg-white { border-color:var(--rhmi-border); box-shadow:0 8px 24px rgba(15,23,42,.05); }
+.admin-main table { width:100%; border-collapse:separate; border-spacing:0; }
+.admin-main thead { background:#f3f7fb; }
+.admin-main th { color:#38506c; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; font-weight:800; }
+.admin-main th,.admin-main td { padding:.9rem 1rem; border-bottom:1px solid #e8eef5; vertical-align:middle; }
+.admin-main tbody tr { transition:background .18s ease; }
+.admin-main tbody tr:hover { background:#f8fbfe; }
+.admin-main input:not([type="checkbox"]):not([type="radio"]),
+.admin-main select,
+.admin-main textarea { border-color:#cfd9e6; border-radius:.75rem; min-height:44px; background:#fff; transition:border-color .18s,box-shadow .18s; }
+.admin-main textarea { min-height:120px; }
+.admin-main input:focus,.admin-main select:focus,.admin-main textarea:focus { border-color:#3977b8; box-shadow:0 0 0 3px rgba(57,119,184,.13); outline:none; }
+.admin-main label { color:#33475f; font-weight:700; }
+.admin-main button,.admin-main a { -webkit-tap-highlight-color:transparent; }
+
+@media (max-width:1279px){.admin-module-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.admin-dashboard-widgets{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){.admin-module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-welcome-panel{grid-template-columns:1fr}.admin-role-card{max-width:320px}}
+@media (max-width:640px){.admin-module-grid,.admin-dashboard-widgets{grid-template-columns:1fr}.admin-module-card{min-height:205px}.admin-topbar{align-items:flex-start}.admin-main{padding:1rem}.admin-welcome-panel{border-radius:1.1rem;padding:1.35rem}.admin-role-card{width:100%;max-width:none}.admin-main .overflow-x-auto{margin-inline:-.25rem}.admin-main th,.admin-main td{padding:.75rem;white-space:nowrap}}
