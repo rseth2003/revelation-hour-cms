@@ -256,6 +256,7 @@
             </div>
 
             <div class="flex items-center gap-3">
+                
                 <div class="hidden text-right sm:block">
                     <p class="text-sm font-semibold">{{ auth()->user()->name }}</p>
                     <p class="text-xs text-slate-500">
@@ -263,6 +264,8 @@
                     </p>
                 </div>
 
+                
+                <button type="button" class="rhmi-theme-toggle admin-theme-toggle" data-theme-toggle><span data-theme-icon aria-hidden="true">◐</span><span data-theme-label>System</span></button>
                 <a href="{{ route('profile.edit') }}" class="rounded-lg border px-3 py-2 text-sm">Profile</a>
 
                 <form method="POST" action="{{ route('logout') }}">

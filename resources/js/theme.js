@@ -7,11 +7,24 @@ function storedTheme() {
 }
 
 function resolvedTheme(preference) {
-    if (preference === 'system') {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
+    return preference === 'system'
+        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        : preference;
+}
 
-    return preference;
+function updateButtons(preference) {
+    const labels = { system: 'System', light: 'Light', dark: 'Dark' };
+    const icons = { system: '◐', light: '☀', dark: '☾' };
+
+    document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+        const icon = button.querySelector('[data-theme-icon]');
+        const label = button.querySelector('[data-theme-label]');
+        if (icon) icon.textContent = icons[preference];
+        if (label) label.textContent = labels[preference];
+        button.dataset.themeMode = preference;
+        button.setAttribute('aria-label', `${labels[preference]} appearance. Click to change theme.`);
+        button.setAttribute('title', `${labels[preference]} appearance — click to change`);
+    });
 }
 
 function applyTheme(preference, persist = true) {
@@ -20,45 +33,24 @@ function applyTheme(preference, persist = true) {
     document.documentElement.dataset.theme = resolved;
     document.documentElement.style.colorScheme = resolved;
 
-    if (persist) {
-        window.localStorage.setItem(STORAGE_KEY, preference);
-    }
-
-    document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
-        const icon = button.querySelector('[data-theme-icon]');
-        const label = button.querySelector('[data-theme-label]');
-        const names = { system: 'System theme', light: 'Light mode', dark: 'Dark mode' };
-        const icons = { system: '◐', light: '☀', dark: '☾' };
-
-        if (icon) icon.textContent = icons[preference];
-        if (label) label.textContent = names[preference];
-        button.setAttribute('aria-label', `${names[preference]}. Activate the next appearance mode.`);
-        button.setAttribute('title', `${names[preference]} — click to change`);
-    });
+    if (persist) window.localStorage.setItem(STORAGE_KEY, preference);
+    updateButtons(preference);
 
     const themeMeta = document.querySelector('meta[name="theme-color"]');
-    if (themeMeta) {
-        themeMeta.setAttribute('content', resolved === 'dark' ? '#08111f' : '#16005f');
-    }
+    if (themeMeta) themeMeta.setAttribute('content', resolved === 'dark' ? '#08111f' : '#16005f');
 }
 
-function createToggle() {
-    if (document.querySelector('[data-theme-toggle]')) return;
-
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'rhmi-theme-toggle';
-    button.dataset.themeToggle = '';
-    button.innerHTML = '<span data-theme-icon aria-hidden="true">◐</span><span data-theme-label>System theme</span>';
-
-    button.addEventListener('click', () => {
-        const current = storedTheme();
-        const next = THEMES[(THEMES.indexOf(current) + 1) % THEMES.length];
-        applyTheme(next);
+function bindToggles() {
+    document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+        if (button.dataset.themeBound === 'true') return;
+        button.dataset.themeBound = 'true';
+        button.addEventListener('click', () => {
+            const current = storedTheme();
+            const next = THEMES[(THEMES.indexOf(current) + 1) % THEMES.length];
+            applyTheme(next);
+        });
     });
-
-    document.body.appendChild(button);
-    applyTheme(storedTheme(), false);
+    updateButtons(storedTheme());
 }
 
 const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -66,5 +58,5 @@ mediaQuery.addEventListener?.('change', () => {
     if (storedTheme() === 'system') applyTheme('system', false);
 });
 
-document.addEventListener('DOMContentLoaded', createToggle);
+document.addEventListener('DOMContentLoaded', bindToggles);
 applyTheme(storedTheme(), false);
