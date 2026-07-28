@@ -112,3 +112,8 @@ The Super Admin controls both a user's role and the CMS modules that user may op
 ## Security headers during development
 
 Security headers remain enabled because they protect the production website. The local policy separately allows the Vite development server on localhost, so `composer run dev` can load CSS and JavaScript normally. Production keeps the stricter policy.
+
+
+## Praise Reports
+
+The public Community menu includes a Praise Reports page for testimonies. Approved reports can include a person's photo, written testimony, scripture, audio, uploaded video or a YouTube link. Selected reports can appear on the homepage. Public encouragements are held for CMS moderation before publication.

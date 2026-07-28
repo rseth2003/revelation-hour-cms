@@ -6,6 +6,7 @@
             ['Events', 'Manage services, conferences, posters and registrations.', '▣', 'admin.events.index', 'blue'],
             ['Livestreams', 'Schedule live broadcasts and manage previous streams.', '●', 'admin.livestreams.index', 'red'],
             ['Sermons', 'Publish video, audio, notes and featured messages.', '▶', 'admin.sermons.index', 'violet'],
+            ['Praise Reports', 'Publish testimonies and moderate encouragements.', '🙌', 'admin.praise-reports.index', 'emerald'],
             ['eLibrary', 'Manage books, documents, categories and access settings.', '▤', 'admin.library-resources.index', 'amber'],
             ['Gallery', 'Create albums and publish church photographs.', '▧', 'admin.gallery.index', 'indigo'],
             ['Give & Donations', 'Update MTN, Airtel and card-giving information.', '♡', 'admin.giving-methods.index', 'emerald'],
@@ -36,7 +37,7 @@
 
     <section class="admin-module-grid">
         @foreach($modules as [$title, $description, $icon, $routeName, $tone])
-            @if($routeName !== 'admin.giving-methods.index' || auth()->user()->hasRole('super_admin','senior_pastor','admin'))
+            @if(($routeName !== 'admin.giving-methods.index' || auth()->user()->hasRole('super_admin','senior_pastor','admin')) && ($routeName !== 'admin.praise-reports.index' || auth()->user()->canAccessModule('praise_reports')))
                 <a href="{{ route($routeName) }}" class="admin-module-card admin-tone-{{ $tone }}">
                     <span class="admin-module-icon">{{ $icon }}</span>
                     <span class="admin-module-status">Active</span>

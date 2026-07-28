@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_','-',app()->getLocale()) }}">
 <head>
+    <script>
+        (() => {
+            const saved = localStorage.getItem('rhmi-theme');
+            const preference = ['system', 'light', 'dark'].includes(saved) ? saved : 'system';
+            const dark = preference === 'dark' || (preference === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+            document.documentElement.dataset.themePreference = preference;
+            document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+            document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+        })();
+    </script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -14,6 +25,7 @@
         'admin.hero-slides.*',
         'admin.events.*',
         'admin.sermons.*',
+        'admin.praise-reports.*',
         'admin.library-resources.*',
         'admin.library-categories.*',
         'admin.livestreams.*',
@@ -86,6 +98,7 @@
                         @if($cmsUser->canAccessModule('events'))<a href="{{ route('admin.events.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.events.*') ? 'is-active' : '' }}">Live Events</a>@endif
                         @if($cmsUser->canAccessModule('events'))<a href="{{ route('admin.event-registrations.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.event-registrations.*') ? 'is-active' : '' }}">Event Registrations</a>@endif
                         @if($cmsUser->canAccessModule('media'))<a href="{{ route('admin.sermons.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.sermons.*') ? 'is-active' : '' }}">Sermons</a>@endif
+                        @if($cmsUser->canAccessModule('praise_reports'))<a href="{{ route('admin.praise-reports.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.praise-reports.*') ? 'is-active' : '' }}">Praise Reports</a>@endif
                         @if($cmsUser->canAccessModule('library'))<a href="{{ route('admin.library-resources.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.library-resources.*') ? 'is-active' : '' }}">eLibrary</a>@endif
                         @if($cmsUser->canAccessModule('library'))<a href="{{ route('admin.library-categories.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.library-categories.*') ? 'is-active' : '' }}">Library Categories</a>@endif
                         @if($cmsUser->canAccessModule('media'))<a href="{{ route('admin.livestreams.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.livestreams.*') ? 'is-active' : '' }}">Livestreams</a>@endif

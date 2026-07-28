@@ -6,6 +6,8 @@
 @section('content')
 @include('partials.home-hero-slider')
 
+<section class="section home-praise-reports"><div class="container"><div class="section-heading-row"><div><p class="eyebrow">See What God Is Doing</p><h2>Praise Reports</h2><p>Stories of answered prayer, restoration and lives transformed in our church community.</p></div><a class="text-link" href="{{ route('praise-reports.index') }}">View all praise reports →</a></div><div class="pr-grid pr-home-grid">@forelse($homepagePraiseReports as $report)<article class="pr-card">@if($report->photo_url)<img src="{{ $report->photo_url }}" alt="{{ $report->person_name ?: $report->title }}">@else<div class="pr-card-placeholder">🙌</div>@endif<div class="pr-card-body">@if($report->category)<span class="pr-chip">{{ $report->category }}</span>@endif<h3>{{ $report->title }}</h3>@if($report->person_name)<p class="pr-person">{{ $report->person_name }}</p>@endif<p>{{ $report->summary ?: \Illuminate\Support\Str::limit(strip_tags($report->testimony),150) }}</p><a class="text-link" href="{{ route('praise-reports.show',$report) }}">Read testimony →</a></div></article>@empty<div class="pr-empty-home"><h3>Praise reports will appear here</h3><p>Approved testimonies shared by the church will help new visitors see what God is doing.</p></div>@endforelse</div></div></section>
+
 <section class="quick-actions" aria-label="Quick links">
     <div class="container quick-grid">
         <a href="#services"><span>01</span><strong>Service Times</strong><small>Join a weekly gathering</small></a>
@@ -155,6 +157,8 @@
         </div>
     </div>
 </section>
+
+
 
 @include('partials.home-daily-word')
 

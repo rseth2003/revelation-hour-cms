@@ -16,6 +16,7 @@ use App\Models\LibraryCategory;
 use App\Models\LibraryResource;
 use App\Models\Livestream;
 use App\Models\Ministry;
+use App\Models\PraiseReport;
 use App\Models\Sermon;
 use App\Models\ServiceTime;
 use App\Models\WebsiteSetting;
@@ -85,7 +86,7 @@ class AppServiceProvider extends ServiceProvider
             AboutSetting::class, Campus::class, CoreValue::class, DailyWord::class,
             Event::class, GalleryAlbum::class, GalleryImage::class, GivingMethod::class,
             HeroSlide::class, Leader::class, LibraryCategory::class, LibraryResource::class,
-            Livestream::class, Ministry::class, Sermon::class, ServiceTime::class,
+            Livestream::class, Ministry::class, PraiseReport::class, Sermon::class, ServiceTime::class,
             WebsiteSetting::class,
         ];
 

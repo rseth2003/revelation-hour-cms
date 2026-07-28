@@ -1,3 +1,4 @@
+import './theme.js';
 document.addEventListener('DOMContentLoaded', () => {
     const menuButton = document.querySelector('.nav-toggle');
     const mobileMenu = document.querySelector('.nav-links');

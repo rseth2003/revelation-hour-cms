@@ -69,7 +69,9 @@ Route::get('/', function () {
 
     $homepageLivestream = \App\Models\Livestream::query()->where('is_published', true)->where('show_on_homepage', true)->orderByDesc('scheduled_start')->first();
 
-    return view('home', compact('events', 'ministries', 'featuredSermon', 'featuredDailyWord', 'heroSlides', 'homepageLivestream'));
+    $homepagePraiseReports = \App\Models\PraiseReport::query()->where('status', 'published')->where('show_on_homepage', true)->orderByDesc('is_featured')->orderBy('sort_order')->orderByDesc('testimony_date')->limit(3)->get();
+
+    return view('home', compact('events', 'ministries', 'featuredSermon', 'featuredDailyWord', 'heroSlides', 'homepageLivestream', 'homepagePraiseReports'));
 })->name('home');
 
 Route::get('/campuses', function () {
@@ -258,6 +260,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
 });
+
+require __DIR__.'/praise-reports.php';
 
 require __DIR__.'/giving.php';
 

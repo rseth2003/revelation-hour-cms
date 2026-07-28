@@ -49,6 +49,7 @@ class User extends Authenticatable
     public const MODULES = [
         'website' => 'Website Settings & Pages',
         'media' => 'Hero Slider, Sermons, Gallery & Livestreams',
+        'praise_reports' => 'Praise Reports & Encouragements',
         'events' => 'Events & Event Registrations',
         'library' => 'eLibrary',
         'membership' => 'Members',
@@ -62,13 +63,13 @@ class User extends Authenticatable
     ];
 
     public const ROLE_DEFAULT_MODULES = [
-        'senior_pastor' => ['website','media','events','library','membership','attendance','church_structure','prayer','giving','communication','analytics'],
+        'senior_pastor' => ['website','media','praise_reports','events','library','membership','attendance','church_structure','prayer','giving','communication','analytics'],
         'campus_pastor' => ['events','membership','attendance','church_structure','prayer','communication','analytics'],
-        'admin' => ['website','media','events','library','membership','attendance','church_structure','prayer','giving','communication','analytics'],
+        'admin' => ['website','media','praise_reports','events','library','membership','attendance','church_structure','prayer','giving','communication','analytics'],
         'senior_usher' => ['membership','attendance'],
         'membership_officer' => ['membership','attendance','communication'],
         'ministry_leader' => ['events','church_structure','communication'],
-        'media_team' => ['media','events','library'],
+        'media_team' => ['media','praise_reports','events','library'],
         'prayer_team' => ['prayer'],
     ];
 

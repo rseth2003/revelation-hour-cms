@@ -16,6 +16,7 @@ class ModuleRouteAccessMiddleware
         'admin.hero-slides.' => 'media',
         'admin.daily-words.' => 'media',
         'admin.sermons.' => 'media',
+        'admin.praise-reports.' => 'praise_reports',
         'admin.gallery.' => 'media',
         'admin.livestreams.' => 'media',
         'admin.events.' => 'events',

@@ -1,5 +1,6 @@
 @import './giving-addon.css';
 @import 'tailwindcss';
+@import './theme.css';
 
 :root {
     --blue: #073b7a;
@@ -1190,3 +1191,22 @@ button, input, textarea { font: inherit; }
 @import './public-production-polish.css';
 
 @import "./admin-production-polish.css";
+
+/* Praise Reports */
+.pr-page-hero{padding:92px 0 72px;background:linear-gradient(135deg,#071f45,#16005f);color:#fff}.pr-page-hero h1{font-size:clamp(2.4rem,6vw,4.8rem);margin:.2rem 0 1rem}.pr-page-hero p{max-width:720px}.pr-filter{display:grid;grid-template-columns:1fr 240px auto;gap:12px;margin-bottom:30px}.pr-filter input,.pr-filter select,.pr-comments input,.pr-comments textarea{width:100%;border:1px solid #cbd5e1;border-radius:14px;padding:13px 15px;background:#fff}.pr-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.pr-card{overflow:hidden;border:1px solid #e2e8f0;border-radius:22px;background:#fff;box-shadow:0 16px 45px rgba(15,23,42,.08)}.pr-card>img,.pr-card-placeholder{width:100%;height:260px;object-fit:cover}.pr-card-placeholder{display:grid;place-items:center;background:linear-gradient(135deg,#eef2ff,#ecfccb);font-size:3rem}.pr-card-body{padding:24px}.pr-card h2,.pr-card h3{margin:.55rem 0;color:#072f68}.pr-chip{display:inline-flex;border-radius:999px;background:#ecfccb;color:#365314;padding:6px 11px;font-size:.78rem;font-weight:800}.pr-person{font-weight:750;color:#475569}.pr-detail{max-width:1050px}.pr-detail-grid{display:grid;grid-template-columns:minmax(260px,420px) 1fr;gap:44px;margin-top:28px;align-items:start}.pr-detail-photo{width:100%;border-radius:24px;box-shadow:0 20px 50px rgba(15,23,42,.15)}.pr-story{font-size:1.06rem;line-height:1.85;margin:24px 0}.pr-detail blockquote{border-left:5px solid #84cc16;background:#f7fee7;border-radius:0 16px 16px 0;padding:22px 24px}.pr-media{margin:40px 0}.pr-media iframe,.pr-media video{width:100%;aspect-ratio:16/9;border:0;border-radius:22px}.pr-audio{margin:30px 0;padding:24px;border-radius:20px;background:#f8fafc}.pr-audio audio{width:100%}.pr-comments{margin-top:50px;border-top:1px solid #e2e8f0;padding-top:35px}.pr-comment{margin:14px 0;padding:18px 20px;border-radius:16px;background:#f8fafc}.pr-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.pr-comments form{display:grid;gap:12px;margin-top:28px}.pr-note{font-size:.86rem;color:#64748b}.pr-empty-home{grid-column:1/-1;padding:42px;border:1px dashed #cbd5e1;border-radius:22px;text-align:center}.home-praise-reports{background:#fff}.pr-home-grid{margin-top:28px}@media(max-width:900px){.pr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pr-detail-grid{grid-template-columns:1fr}.pr-filter{grid-template-columns:1fr}}@media(max-width:620px){.pr-grid{grid-template-columns:1fr}.pr-form-grid{grid-template-columns:1fr}.pr-card>img,.pr-card-placeholder{height:230px}}
+
+/* Praise report engagement */
+.pr-reactions{margin-top:44px;padding:28px;border:1px solid #e2e8f0;border-radius:22px;background:linear-gradient(135deg,#f8fafc,#f7fee7)}
+.pr-reactions h2{margin:.2rem 0 0;color:#072f68}
+.pr-reaction-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:22px}
+.pr-reaction-grid form{margin:0}
+.pr-reaction-button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:54px;padding:12px 15px;border:1px solid #cbd5e1;border-radius:14px;background:#fff;color:#0f172a;font:inherit;font-weight:750;cursor:pointer;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
+.pr-reaction-button:hover{transform:translateY(-2px);border-color:#84cc16;box-shadow:0 10px 25px rgba(15,23,42,.08)}
+.pr-reaction-button strong{display:grid;place-items:center;min-width:30px;height:30px;padding:0 8px;border-radius:999px;background:#eef2ff;color:#072f68}
+.pr-comments-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:20px}
+.pr-comments-heading h2{margin:.2rem 0 0;color:#072f68}
+.pr-comments-heading>strong{color:#64748b;font-size:.9rem}
+.pr-comments-empty{padding:20px;border:1px dashed #cbd5e1;border-radius:16px;background:#f8fafc;color:#64748b}
+.home-praise-reports{padding-top:56px;padding-bottom:56px;border-bottom:1px solid #e2e8f0;background:linear-gradient(180deg,#fff,#f8fafc)}
+@media(max-width:900px){.pr-reaction-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.pr-reaction-grid{grid-template-columns:1fr}.pr-comments-heading{align-items:flex-start;flex-direction:column}}
