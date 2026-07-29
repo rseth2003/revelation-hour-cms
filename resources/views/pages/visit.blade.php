@@ -22,9 +22,10 @@
                 <a class="btn btn-outline" href="tel:{{ preg_replace('/\s+/', '', $websiteSettings->phone_primary ?: '+256 774 328 127') }}">Call for Directions</a>
             </div>
         </div>
-        <div class="visit-map-frame">
-            <iframe title="RHMI location" src="https://www.google.com/maps?q=Valley+Road,+Canaansite+Estate,+Nakwero,+Gayaza,+Uganda&output=embed" loading="lazy" allowfullscreen></iframe>
-        </div>
+        <div class="visit-map-frame" data-map-frame>
+<iframe title="RHMI location" src="https://maps.google.com/maps?q=Valley%20Road%2C%20Canaansite%20Estate%2C%20Nakwero%2C%20Gayaza%2C%20Uganda&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+<div class="visit-map-fallback"><div><h3>Find Revelation Hour Ministries International</h3><p>Valley Road, Canaansite Estate, Nakwero–Gayaza, Uganda</p><a class="btn btn-primary" href="https://maps.app.goo.gl/4zP4RCdjQYg9PoPn6?g_st=awb" target="_blank" rel="noopener">Open Directions</a></div></div>
+</div>
     </div>
 </section>
 

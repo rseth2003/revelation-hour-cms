@@ -1,0 +1,3 @@
+<?php
+use Illuminate\Database\Migrations\Migration; use Illuminate\Database\Schema\Blueprint; use Illuminate\Support\Facades\Schema;
+return new class extends Migration { public function up(): void { Schema::create('website_feedback',function(Blueprint $t){$t->id();$t->string('name')->nullable();$t->string('email')->nullable();$t->unsignedTinyInteger('rating');$t->string('category',40);$t->text('message');$t->string('status',20)->default('new')->index();$t->text('admin_notes')->nullable();$t->boolean('approved_for_display')->default(false);$t->timestamps();}); } public function down(): void {Schema::dropIfExists('website_feedback');} };

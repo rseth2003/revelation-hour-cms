@@ -36,7 +36,9 @@
         'admin.core-values.*',
         'admin.leaders.*',
         'admin.service-times.*',
-        'admin.settings.*'
+        'admin.settings.*',
+        'admin.faqs.*',
+        'admin.feedback.*'
     );
 
     $churchOpen = request()->routeIs(
@@ -109,6 +111,8 @@
                         @if($cmsUser->canAccessModule('website'))<a href="{{ route('admin.core-values.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.core-values.*') ? 'is-active' : '' }}">Core Values</a>@endif
                         @if($cmsUser->canAccessModule('church_structure'))<a href="{{ route('admin.leaders.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.leaders.*') ? 'is-active' : '' }}">Leadership</a>@endif
                         @if($cmsUser->canAccessModule('website'))<a href="{{ route('admin.service-times.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.service-times.*') ? 'is-active' : '' }}">Service Times</a>@endif
+                        @if($cmsUser->canAccessModule('website'))<a href="{{ route('admin.faqs.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.faqs.*') ? 'is-active' : '' }}">FAQs</a>@endif
+                        @if($cmsUser->canAccessModule('website'))<a href="{{ route('admin.feedback.index') }}" class="admin-nav-sublink {{ request()->routeIs('admin.feedback.*') ? 'is-active' : '' }}">Website Feedback</a>@endif
                         @if($cmsUser->canAccessModule('website'))<a href="{{ route('admin.settings.edit') }}" class="admin-nav-sublink {{ request()->routeIs('admin.settings.*') ? 'is-active' : '' }}">Website Settings</a>@endif
                     </div>
                 </div>

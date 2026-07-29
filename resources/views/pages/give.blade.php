@@ -15,7 +15,7 @@
     <div class="container">
         <div class="give-intro">
             <div><p class="eyebrow">Ways to give</p><h2 class="section-title-left">Choose a giving method</h2></div>
-            <p>Verified giving details will be published here by the church.</p>
+            <p>Use one of the verified giving methods provided by Revelation Hour Ministries International.</p>
         </div>
 
         <div class="giving-grid">
@@ -45,13 +45,13 @@
                         @if($method->account_number)<p><span>Number / Code</span><strong class="giving-number">{{ $method->account_number }}</strong><button type="button" class="giving-copy" data-copy="{{ $method->account_number }}">Copy</button></p>@endif
                     </div>
                     @if(!$method->account_number)
-                        <div class="giving-pending"><strong>Details will be published soon</strong></div>
+                        <div class="giving-pending"><strong>Contact the church office for verified giving instructions</strong></div>
                     @endif
                     @if($method->instructions)<p class="giving-instructions">{{ $method->instructions }}</p>@endif
                     @if($method->button_url)<a class="btn btn-primary giving-action" href="{{ $method->button_url }}" target="_blank" rel="noopener">{{ $method->button_label ?: 'Continue' }}</a>@endif
                 </article>
             @empty
-                <div class="content-card giving-empty"><h2>Giving details will be published soon</h2></div>
+                <div class="content-card giving-empty"><h2>Contact the church office for verified giving instructions</h2></div>
             @endforelse
         </div>
 

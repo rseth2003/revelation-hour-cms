@@ -70,8 +70,9 @@ Route::get('/', function () {
     $homepageLivestream = \App\Models\Livestream::query()->where('is_published', true)->where('show_on_homepage', true)->orderByDesc('scheduled_start')->first();
 
     $homepagePraiseReports = \App\Models\PraiseReport::query()->where('status', 'published')->where('show_on_homepage', true)->orderByDesc('is_featured')->orderBy('sort_order')->orderByDesc('testimony_date')->limit(3)->get();
+    $faqs = \App\Models\Faq::query()->where('is_published', true)->orderBy('sort_order')->orderBy('id')->get();
 
-    return view('home', compact('events', 'ministries', 'featuredSermon', 'featuredDailyWord', 'heroSlides', 'homepageLivestream', 'homepagePraiseReports'));
+    return view('home', compact('events', 'ministries', 'featuredSermon', 'featuredDailyWord', 'heroSlides', 'homepageLivestream', 'homepagePraiseReports', 'faqs'));
 })->name('home');
 
 Route::get('/campuses', function () {
@@ -265,6 +266,7 @@ require __DIR__.'/praise-reports.php';
 
 require __DIR__.'/giving.php';
 
+require __DIR__.'/final-polish.php';
 require __DIR__.'/auth.php';
 
 require __DIR__.'/communication.php';

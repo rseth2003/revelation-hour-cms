@@ -6,8 +6,20 @@
 @section('content')
 @include('partials.home-hero-slider')
 
-<section class="section home-praise-reports"><div class="container"><div class="section-heading-row"><div><p class="eyebrow">See What God Is Doing</p><h2>Praise Reports</h2><p>Stories of answered prayer, restoration and lives transformed in our church community.</p></div><a class="text-link" href="{{ route('praise-reports.index') }}">View all praise reports →</a></div><div class="pr-grid pr-home-grid">@forelse($homepagePraiseReports as $report)<article class="pr-card">@if($report->photo_url)<img src="{{ $report->photo_url }}" alt="{{ $report->person_name ?: $report->title }}">@else<div class="pr-card-placeholder">🙌</div>@endif<div class="pr-card-body">@if($report->category)<span class="pr-chip">{{ $report->category }}</span>@endif<h3>{{ $report->title }}</h3>@if($report->person_name)<p class="pr-person">{{ $report->person_name }}</p>@endif<p>{{ $report->summary ?: \Illuminate\Support\Str::limit(strip_tags($report->testimony),150) }}</p><a class="text-link" href="{{ route('praise-reports.show',$report) }}">Read testimony →</a></div></article>@empty<div class="pr-empty-home"><h3>Praise reports will appear here</h3><p>Approved testimonies shared by the church will help new visitors see what God is doing.</p></div>@endforelse</div></div></section>
-
+<section class="section home-praise-reports">
+<div class="container">
+<div class="section-heading-row"><div><p class="eyebrow">See What God Is Doing</p><h2>Praise Reports</h2><p>Stories of answered prayer, restoration and lives transformed in our church community.</p></div><a class="text-link" href="{{ route('praise-reports.index') }}">View all praise reports →</a></div>
+<div class="pr-grid pr-home-grid">
+@forelse($homepagePraiseReports->take(1) as $report)
+<article class="pr-card">
+@if($report->youtube_embed_url)<div class="pr-home-media"><iframe src="{{ $report->youtube_embed_url }}" title="{{ $report->title }}" loading="lazy" allowfullscreen></iframe></div>
+@elseif($report->video_path)<div class="pr-home-media"><video controls preload="metadata" poster="{{ $report->photo_url }}"><source src="{{ $report->video_url }}"></video></div>
+@elseif($report->photo_url)<img src="{{ $report->photo_url }}" alt="{{ $report->person_name ?: $report->title }}">
+@else<div class="pr-card-placeholder">🙌</div>@endif
+<div class="pr-card-body">@if($report->category)<span class="pr-chip">{{ $report->category }}</span>@endif<h3>{{ $report->title }}</h3>@if($report->person_name)<p class="pr-person">{{ $report->person_name }}</p>@endif<p>{{ $report->summary ?: \Illuminate\Support\Str::limit(strip_tags($report->testimony),220) }}</p><a class="text-link" href="{{ route('praise-reports.show',$report) }}">Read full testimony →</a></div>
+</article>
+@empty<div class="pr-empty-home"><h3>Stories of God’s faithfulness</h3><p>Approved praise reports will be shared here.</p></div>@endforelse
+</div></div></section>
 <section class="quick-actions" aria-label="Quick links">
     <div class="container quick-grid">
         <a href="#services"><span>01</span><strong>Service Times</strong><small>Join a weekly gathering</small></a>
@@ -162,6 +174,8 @@
 
 @include('partials.home-daily-word')
 
+<section class="section rhmi-faq-section" id="frequently-asked-questions"><div class="container"><div class="section-heading"><p class="eyebrow">Helpful Information</p><h2>Frequently Asked Questions</h2><p>Quick answers to help you feel at home at RHMI.</p></div><div class="rhmi-faq-grid">@forelse($faqs as $faq)<details class="rhmi-faq-item"><summary>{{ $faq->question }}</summary><div class="rhmi-faq-answer">{{ $faq->answer }}</div></details>@empty<details class="rhmi-faq-item"><summary>Can I attend RHMI for the first time?</summary><div class="rhmi-faq-answer">Yes. You are warmly welcome to join any of our published services and gatherings.</div></details><details class="rhmi-faq-item"><summary>How can I request prayer?</summary><div class="rhmi-faq-answer">Use the Contact & Prayer page to send a private prayer request to the ministry team.</div></details><details class="rhmi-faq-item"><summary>Where is the church located?</summary><div class="rhmi-faq-answer">RHMI is located on Valley Road, Canaansite Estate, Nakwero–Gayaza, Uganda.</div></details>@endforelse</div></div></section>
+<section class="section rhmi-feedback-section" id="website-feedback"><div class="container rhmi-feedback-grid"><div class="rhmi-feedback-copy"><p class="eyebrow">Help Us Serve Better</p><h2>Share website feedback</h2><p>Tell us what was helpful or what could be improved. Your submission remains private and is reviewed by the website team.</p></div><form class="rhmi-feedback-form" method="POST" action="{{ route('website-feedback.store') }}">@csrf<div class="rhmi-honeypot"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div><label>Name (optional)<input name="name" maxlength="100" value="{{ old('name') }}"></label><label>Email (optional)<input type="email" name="email" maxlength="190" value="{{ old('email') }}"></label><label>Rating<select name="rating" required><option value="">Choose</option>@for($i=5;$i>=1;$i--)<option value="{{ $i }}">{{ $i }} {{ $i===1 ? 'star' : 'stars' }}</option>@endfor</select></label><label>Feedback type<select name="category" required><option value="general">General</option><option value="design">Design</option><option value="content">Content</option><option value="technical">Technical issue</option><option value="accessibility">Accessibility</option><option value="other">Other</option></select></label><label class="full">Your feedback<textarea name="message" rows="5" maxlength="3000" required>{{ old('message') }}</textarea></label><div class="full"><button class="btn btn-primary" type="submit">Send Feedback</button></div></form></div></section>
 <section class="section home-final-cta">
     <div class="container home-final-cta-inner">
         <div>
